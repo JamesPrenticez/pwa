@@ -1,0 +1,15 @@
+primary: "#fff",
+muted: "#d1d5db",
+ghost: "#303030",
+secondary: "#101010",
+disabled: "#666",
+major: "#00FF00",
+sage: "#a3ff84",
+mist: "#90a299",
+tarantula: "#111815",
+night: " #16221a",
+shadow: "#1c281f",
+fern: "#1f422d",
+moss: "#2d422d ",
+
+#242424

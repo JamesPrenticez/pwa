@@ -1,0 +1,34 @@
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/env */
+body {
+  padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px)
+    env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+}
+
+/* It targets only the app used within the browser */
+@media (display-mode: browser) {
+}
+/* It targets only the app used with a system icon in standalone mode */
+@media (display-mode: standalone) {
+}
+/* It targets only the app used with a system icon in all mode */
+@media (display-mode: standalone),
+  (display-mode: fullscreen),
+  (display-mode: minimal-ui) {
+}
+
+.theme-a {
+  background: #dca;
+  color: #731;
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-a.adaptive {
+    background: #753;
+    color: #dcb;
+    outline: 5px dashed #000;
+  }
+}
+
+@media (prefers-reduced-motion) {
+  /* styles to apply if a user's device settings are set to reduced motion */
+}
