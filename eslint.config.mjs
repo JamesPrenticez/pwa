@@ -8,7 +8,12 @@ export default [
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
   },
   {
-    ignores: ["*.config.*", "dist", "dev-dist", "node_modules"], // Replaces deprecated .eslintignore file
+    ignores: [
+      "frontend/*.config.*",
+      "frontend/dist",
+      "frontend/dev-dist",
+      "frontend/node_modules",
+    ], // Replaces deprecated .eslintignore file
   },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
