@@ -24,16 +24,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Create ZIP package for deployment
-        run: |
-          cd backend
-          zip -r ../backend.zip .  # Create a ZIP file of the backend folder
-
-      - name: Upload ZIP artifact for deployment job
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: ../backend.zip # Upload the ZIP file
+          path: ./backend
 
   deploy:
     runs-on: ubuntu-latest
@@ -55,4 +50,4 @@ jobs:
           app-name: "selfregulator-api"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3DB5EDF55EA4895B6E642CFBFA78483 }}
-          package: backend.zip # Use the ZIP file for deployment
+          package: ./backend
