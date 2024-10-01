@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { type IUser } from "@models";
 import { userApi } from "@redux/services";
+import { authApi } from "@redux/services/authApi";
+
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { User } from "@models/user";
 
 export interface UserState {
-  data: IUser;
+  data: User;
   spaToken: string | null;
   isOnline: boolean;
 }
@@ -25,14 +27,14 @@ export const userSlice = createSlice({
   name: "user",
   initialState: initialState,
   reducers: {
-    updateUser: (state, action: PayloadAction<Partial<IUser> | null>) => {
+    updateUser: (state, action: PayloadAction<Partial<User> | null>) => {
       if (state.data) {
         state.data = { ...state.data, ...action.payload };
       }
     },
     updateUserField: (
       state,
-      action: PayloadAction<{ key: keyof IUser; value: any }>,
+      action: PayloadAction<{ key: keyof User; value: any }>,
     ) => {
       const { key, value } = action.payload;
       if (key in state.data) {
@@ -47,18 +49,40 @@ export const userSlice = createSlice({
         state.isOnline = true;
       }
     },
+    setSpaToken: (state, action: PayloadAction<string | null>) => {
+      state.spaToken = action.payload;
+      if (action.payload) {
+        // localStorage.setItem(LocalStorageKey.SPA_TOKEN, action.payload);
+      } else {
+        // localStorage.removeItem(LocalStorageKey.SPA_TOKEN);
+      }
+    },
+    logoutUser(state) {
+      state.data = {} as User;
+      state.spaToken = null;
+      // localStorage.removeItem(LocalStorageKey.SPA_TOKEN);
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      userApi.endpoints.getUser.matchFulfilled,
+      (action) =>
+        userApi.endpoints.getUser.matchFulfilled(action) ||
+        authApi.endpoints.login.matchFulfilled(action) ||
+        authApi.endpoints.register.matchFulfilled(action),
       (state, action) => {
-        state.data = action.payload.data;
+        // Define how the state should change when any of the above actions match
+        state.data = { ...state.data, ...action.payload };
       },
     );
   },
 });
 
-export const { updateUser, updateUserField, toggleisOnline } =
-  userSlice.actions;
+export const {
+  updateUser,
+  updateUserField,
+  toggleisOnline,
+  setSpaToken,
+  logoutUser,
+} = userSlice.actions;
 
 export default userSlice;

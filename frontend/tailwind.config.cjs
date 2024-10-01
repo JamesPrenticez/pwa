@@ -33,6 +33,7 @@ module.exports = {
         shadow: "#1c281f",
         fern: "#1f422d",
         moss: "#2d422d ",
+        evergreen: "#3d853c",
       },
       textColor: {
         primary: "#fff",
@@ -48,6 +49,7 @@ module.exports = {
         shadow: "#1c281f",
         fern: "#1f422d",
         moss: "#2d422d ",
+        evergreen: "#3d853c",
       },
       borderColor: {
         primary: "#101010",
@@ -64,6 +66,7 @@ module.exports = {
         shadow: "#1c281f",
         fern: "#1f422d",
         moss: "#2d422d ",
+        evergreen: "#3d853c",
       },
       ringColor: {
         primary: "#fff",
@@ -78,6 +81,7 @@ module.exports = {
         shadow: "#1c281f",
         fern: "#1f422d",
         moss: "#2d422d ",
+        evergreen: "#3d853c",
       },
       gradientColorStops: {
         major: "#00FF00",
@@ -89,6 +93,7 @@ module.exports = {
         shadow: "#1c281f",
         fern: "#1f422d",
         moss: "#2d422d ",
+        evergreen: "#3d853c",
       },
       height: {
         "screen-5rem": "calc(100vh - 5rem)",

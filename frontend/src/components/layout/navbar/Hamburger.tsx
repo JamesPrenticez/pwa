@@ -1,11 +1,12 @@
+import type { ReactElement } from "react";
+
 interface HamburgerProps {
   isMenuOpen: boolean;
   setIsMenuOpen: () => void;
 }
 
-export const Hamburger = ({ isMenuOpen, setIsMenuOpen }: HamburgerProps) => {
-  const baseClass =
-    "bg-secondary-muted group-hover:bg-secondary block h-[0.2rem]  rounded transform transition-all duration-200 ease-in-out";
+export const Hamburger = ({ isMenuOpen, setIsMenuOpen }: HamburgerProps): ReactElement => {
+  const baseClass = "bg-secondary-muted group-hover:bg-secondary block h-[0.2rem]  rounded transform transition-all duration-200 ease-in-out";
 
   return (
     <button

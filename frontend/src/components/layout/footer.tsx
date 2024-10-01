@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 
 export const Footer = (): ReactElement => {
   return (
-    <footer className="w-full h-64 text-theme-secondary pt-5 bg-green-900 text-white">
+    <footer className="w-full h-64 text-theme-secondary pt-5 bg-tarantula text-secondary">
       <div className="mt-16 w-full flex items-center justify-center ">
         <a
           href="https://github.com/JamesPrenticez"

@@ -1,6 +1,6 @@
-import React, { type SVGProps, type ReactElement } from "react";
+import { type SVGProps, type ReactElement } from "react";
 
-function Logo({ ...props }: SVGProps<SVGSVGElement>): ReactElement {
+export const Logo = ({ ...props }: SVGProps<SVGSVGElement>): ReactElement => {
   return (
     <svg
       viewBox="0 0 300 300"
@@ -32,6 +32,4 @@ function Logo({ ...props }: SVGProps<SVGSVGElement>): ReactElement {
       />
     </svg>
   );
-}
-
-export default Logo;
+};

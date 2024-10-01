@@ -1,11 +1,15 @@
-import type { ReactNode } from "react";
+import type { ReactElement, PropsWithChildren, HTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
 
-interface MaxWidthWrapperProps {
-  children: ReactNode;
-}
-
-export const MaxWidthWrapper = ({ children }: MaxWidthWrapperProps) => {
+export const MaxWidthWrapper = ({
+  className,
+  children,
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>): ReactElement => {
   return (
-    <div className="max-w-7xl mx-auto w-full mt-12 bg-glass">{children}</div>
+    <div
+      className={twMerge("max-w-7xl mx-auto w-full mt-12 bg-glass", className)}
+    >
+      {children}
+    </div>
   );
 };

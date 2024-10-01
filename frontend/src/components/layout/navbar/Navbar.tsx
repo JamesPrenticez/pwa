@@ -5,12 +5,12 @@ import {
 } from "@constants";
 import { NavLink, useLocation } from "react-router-dom";
 // import { useAppSelector } from "@redux/hooks";
-import { CompanyLogo } from "./CompanyLogo";
-import { CompanyName } from "./CompanyName";
+import { CompanyLogo } from "@components/layout/navbar/company-logo";
+import { CompanyName } from "@components/layout/navbar/company-name";
+import { Hamburger } from "@components/layout/navbar/hamburger";
 import { Button } from "@components/ui/button";
-import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
-import { Hamburger } from "./Hamburger";
 import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
+import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
 
 export const Navbar = (): ReactElement => {
   const location = useLocation();
@@ -71,7 +71,7 @@ export const Navbar = (): ReactElement => {
 
   return (
     <>
-      <div className="h-[4rem] md:h-[5rem] bg-[#111815] text-muted flex font-semibold px-4">
+      <div className="h-[4rem] md:h-[5rem] bg-tarantula text-muted flex font-semibold px-4">
         <div className="flex items-center max-w-7xl w-full mx-auto">
           <CompanyLogo onClick={() => setIsMenuOpen(false)} />
 

@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { useAppSelector } from "@redux/hooks";
 import { getInitials } from "@utils/getInitials";
 
@@ -6,7 +7,7 @@ interface AvatarProps {
   height?: number;
 }
 
-export const Avatar = ({ width = 50, height = 50 }: AvatarProps) => {
+export const Avatar = ({ width = 50, height = 50 }: AvatarProps): ReactElement => {
   const user = useAppSelector((state) => state.user);
 
   return (

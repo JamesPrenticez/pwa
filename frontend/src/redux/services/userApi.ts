@@ -1,25 +1,27 @@
-import { ISuccessResult, IUser } from "@models";
 import { updateUserField, userSlice } from "@redux/slices";
 import { RootState } from "@redux/store";
 import { getUserId } from "./getUserId";
 import { baseApi } from "@redux/services/baseApi";
+
+import type { SuccessResult } from "@models/api";
+import type { User } from "@models/user";
 
 // TODO typesafe url params with an interface
 const user_id = getUserId();
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUser: builder.query<ISuccessResult<IUser>, void>({
+    getUser: builder.query<SuccessResult<User>, void>({
       query: () => ({
         url: `user/${user_id}`,
         method: "GET",
         queryKey: "getUser",
-        providesTags: ["User"],
+        providesTags: ["user"],
       }),
     }),
     updateUserDetails: builder.mutation<
-      IUser,
-      Partial<IUser> | { key: keyof IUser; value: any }
+      User,
+      Partial<User> | { key: keyof User; value: any }
     >({
       query: (update) => ({
         url: "user",

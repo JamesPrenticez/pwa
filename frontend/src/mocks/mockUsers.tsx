@@ -2,11 +2,11 @@ import {
   UserSubscription,
   UserPermissions,
   AccountType,
-  type IUser,
-} from "@models";
+  type User,
+} from "@models/user";
 import dayjs from "dayjs";
 
-export const mockUsers: IUser[] = [
+export const mockUsers: User[] = [
   {
     id: "123456",
     email: "jamesprenticez@gmail.com",

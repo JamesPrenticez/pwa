@@ -1,22 +1,14 @@
 import type { ReactElement } from "react";
 import { ClickCounterButton } from "@components/click-counter";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
-import LogoSVG from "@assets/logo.svg";
 
 export const Home = (): ReactElement => {
   return (
-    <MaxWidthWrapper>
-      <div className="flex flex-col justify-center items-center p-4">
-        <img
-          width={180}
-          src={LogoSVG}
-          className="logo react"
-          alt="React logo"
-        />
+    <MaxWidthWrapper className="flex flex-col min-h-[40rem]">
+      <div className="flex flex-col justify-center items-center p-4 grow">
+        <h1 className="text-red-500 font-bold mb-4">PWA</h1>
 
-        <h1 className="text-red-500 font-bold">PWA</h1>
-
-        <div className="card">
+        <div className="border-sage border-2 p-4 rounded-lg">
           <ClickCounterButton />
         </div>
       </div>
