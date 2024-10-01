@@ -58,4 +58,3 @@ jobs:
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A3DB5EDF55EA4895B6E642CFBFA78483 }}
           package: backend.zip # Use the ZIP file for deployment
-          startup-command: "npm run start" # Specify the startup command
