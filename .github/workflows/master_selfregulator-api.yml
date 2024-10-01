@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: "16.x"
+          node-version: "18.18.0"
 
       - name: npm install, build, and test in backend folder
         run: |
@@ -27,13 +27,13 @@ jobs:
       - name: Archive files
         run: |
           cd backend
-          powershell -command "Compress-Archive -Path * -DestinationPath ../backend.zip"
+          powershell -command "Compress-Archive -Path * -DestinationPath backend.zip"
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: ../backend.zip # Upload the ZIP file
+          path: backend.zip # Update the path to the ZIP file in the backend directory
 
   deploy:
     runs-on: ubuntu-latest
