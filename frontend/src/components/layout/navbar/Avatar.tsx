@@ -7,7 +7,10 @@ interface AvatarProps {
   height?: number;
 }
 
-export const Avatar = ({ width = 50, height = 50 }: AvatarProps): ReactElement => {
+export const Avatar = ({
+  width = 50,
+  height = 50,
+}: AvatarProps): ReactElement => {
   const user = useAppSelector((state) => state.user);
 
   return (
