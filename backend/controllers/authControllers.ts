@@ -93,16 +93,12 @@ export const logout = async (req: Request, res: Response): Promise<any> => {
 // SignUp
 export const register = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
-  console.log(email, password);
 
   try {
-    console.log("try?");
     // Check if the username is already taken
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
-
-    console.log(existingUser);
 
     if (existingUser) {
       return res.status(400).json({ error: "Email is already taken" });
