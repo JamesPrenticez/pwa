@@ -1,4 +1,4 @@
-name: Build and Deploy Node.js Express App to Azure Web App - selfregulator-api
+name: Build and Deploy Node.js Express App to Azure Web App - selfregulator-be
 
 on:
   push:
@@ -54,7 +54,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: "selfregulator-api"
+          app-name: "selfregulator-be"
           slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_044C6948E3A04701B3DD43286D54C756 }}
           package: backend.zip # Use the ZIP file for deployment
