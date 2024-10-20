@@ -1,11 +1,11 @@
-import { IUser } from "@models/user";
+import { User } from "@models/user";
 
 export interface LoginDetails {
-  email: IUser["email"];
+  email: User["email"];
   password: string;
 }
 
 export interface RegisterDetails {
-  email: IUser["email"];
+  email: User["email"];
   password: string;
 }

@@ -12,10 +12,10 @@ export const Label = forwardRef<HTMLLabelElement, Props>(
     return (
       <div className="pb-4 relative">
         <label ref={ref} {...props} className={twMerge("", className)}>
-          <h5 className="text-[#90a299] text-sm mt-2 mb-[2px] ml-[2px] font-bold">
+          <h5 className="text-[#90a299] text-2xl mt-2 mb-[2px] ml-[2px] font-light">
             {value}
           </h5>
-          {children}
+          <div className="p-[0.25rem]">{children}</div>
         </label>
       </div>
     );

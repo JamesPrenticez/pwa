@@ -20,10 +20,14 @@ export const InputText = forwardRef<
             text-sm
             border-none
             placeholder:text-disabled
-            focus-visible:outline-none 
-            focus-visible:ring-[1px]
-            focus-visible:ring-muted
-            disabled:opacity-50`,
+            transition-all
+            duration-200
+            ease-in-out
+            outline-none
+            focus-visible:ring-[2px]
+            focus-visible:ring-major
+            disabled:opacity-50
+          `,
         className,
       )}
       ref={ref}

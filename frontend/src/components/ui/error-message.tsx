@@ -4,7 +4,7 @@ export const ErrorMessage = ({
   message: string | null | undefined;
 }) => {
   return (
-    <p className="text-red-600 text-[12px] italic absolute -bottom-[4px] left-[8px]">
+    <p className="text-fuchsia-500 text-[12px] italic absolute -bottom-[12px] left-[8px]">
       {message}
     </p>
   );

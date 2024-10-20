@@ -18,7 +18,6 @@ export default defineConfig({
     setupFiles: ["src/setupTest.ts"],
   },
   plugins: [
-    react(),
     svgr(),
     alias({
       entries: [

@@ -11,6 +11,7 @@ import { Hamburger } from "@components/layout/navbar/hamburger";
 import { Button } from "@components/ui/button";
 import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
 import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
+import { MaxWidthWrapper } from "../max-width-wrapper";
 
 export const Navbar = (): ReactElement => {
   const location = useLocation();
@@ -102,10 +103,10 @@ interface NavbarWrapperProps {
 
 const NavbarWrapper = ({ children }: NavbarWrapperProps) => {
   return (
-    <div className="h-[4rem] md:h-[5rem] bg-tarantula flex font-[400] text-[16px] px-4">
-      <div className="flex items-center justify-between max-w-7xl w-full mx-auto">
+    <div className="h-[4rem] md:h-[5rem] bg-tarantula flex font-[400] text-[16px] px-4 absolute top-0 right-0 left-0">
+      <MaxWidthWrapper className="flex items-center justify-between  w-full mx-auto">
         {children}
-      </div>
+      </MaxWidthWrapper>
     </div>
   );
 };

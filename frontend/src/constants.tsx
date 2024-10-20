@@ -1,17 +1,19 @@
 import {
   // Path,
-  type INavigationItem,
+  type NavigationItem,
 } from "@models";
 
 export const project = {
   name: "Self Regulator",
-  hero1: "Unlock your potential!",
-  hero2: "Record success, crush goals, and level up!",
+  unlock: "Unlock your potential!",
+  record: "Record success, crush goals, and level up!",
+  move: "MOVE IN THE RIGHT DIRECTION",
+  best: "The World's Most Powerful Self Development Platform",
 };
 
-export const navigationItemsForHomepage: INavigationItem[] = [];
+export const navigationItemsForHomepage: NavigationItem[] = [];
 
-export const navigationItemsForAuthenticedUsers: INavigationItem[] = [];
+export const navigationItemsForAuthenticedUsers: NavigationItem[] = [];
 
 export const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
 

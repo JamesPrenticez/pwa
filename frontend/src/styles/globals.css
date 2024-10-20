@@ -17,3 +17,29 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+*::selection {
+  color: #111815;
+  background-color: #d1d5db;
+}
+
+/* TODO - add this classname to lobby/cards component */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 0.6rem;
+  background: var(--color-light-black);
+  -webkit-border-radius: 1rem;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-medium-grey);
+  -webkit-border-radius: 1rem;
+  cursor: pointer;
+}

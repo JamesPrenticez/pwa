@@ -11,7 +11,8 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "major"
     | "minor"
     | "cta"
-    | "muted";
+    | "muted"
+    | "gangster";
   variant?: "outlined" | "filled" | "link";
   asChild?: boolean; // TODO do we have a use for this prop?
   children: ReactNode;
@@ -48,7 +49,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       },
       success: {
         outlined: "border-2 border-green-600",
-        filled: "bg-green-600 hover:bg-green-600/80",
+        filled:
+          "bg-gradient-to-b from-leaf to-grass bg-opacity-80  border-b-2 border-sage",
+      },
+      gangster: {
+        outlined: "border-2 border-green-600",
+        filled:
+          "bg-gradient-to-b from-black to-gray-800 bg-opacity-80  border-b-2 border-gray-600",
       },
       error: {
         outlined: "border-2 border-red-600",
@@ -63,36 +70,52 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         filled: "bg-minor hover:bg-minor/80",
       },
       info: {
-        outlined: "border-2 border-blue-600",
         filled: "bg-blue-600 hover:bg-blue-600/80",
+        outlined: "border-2 border-blue-600",
       },
       cta: {
-        outlined: "border-2",
+        outlined: "border-2 border-sage",
         filled:
           "bg-gradient-to-br from-sage to-major hover:from-sage/110 hover:to-major/110 text-tarantula",
       },
     };
 
     return (
-      <button
-        className={twMerge(
-          `
-        px-8
-        py-2
-        rounded-md
-        cursor-pointer 
-        text-primary 
-        `,
-          options[color][variant],
-          className,
-        )}
-        ref={ref}
-        {...props}
-      >
-        {children}
-      </button>
+      <div className="p-[0.25rem]">
+        <button
+          className={twMerge(
+            `
+          px-8
+          py-2
+          rounded-md
+          cursor-pointer 
+          text-primary 
+          transition-all
+          duration-200
+          ease-in-out
+          outline-none
+          focus-visible:ring-[2px]
+          focus-visible:ring-major
+          disabled:opacity-50
+          `,
+            options[color][variant],
+            className,
+          )}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </button>
+      </div>
     );
   },
 );
 
 Button.displayName = "Button";
+
+{
+  /* <div class="relative inline-block px-8 py-2 rounded-md cursor-pointer text-primary border-b-2 border-sage overflow-hidden">
+    <span class="relative z-10">Hover me</span>
+    <span class="absolute inset-0 bg-gradient-to-b from-leaf to-grass transition-opacity duration-200 ease-in-out opacity-100 hover:opacity-80"></span>
+</div> */
+}
