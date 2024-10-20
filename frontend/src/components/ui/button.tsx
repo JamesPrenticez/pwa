@@ -62,7 +62,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         filled: "bg-red-600 hover:bg-red-600/80",
       },
       major: {
-        outlined: "border-2 border-major",
+        outlined:
+          "border-2 border-major hover:bg-major hover:text-tarantula text-sage",
         filled: "bg-major hover:bg-major/80",
       },
       minor: {

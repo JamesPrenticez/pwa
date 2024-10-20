@@ -43,3 +43,10 @@ body,
   -webkit-border-radius: 1rem;
   cursor: pointer;
 }
+
+.custom-text-gradient {
+  color: transparent;
+  background: linear-gradient(to bottom, #515151 0%, #66666699 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}

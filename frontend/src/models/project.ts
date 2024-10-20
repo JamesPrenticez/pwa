@@ -13,8 +13,6 @@ export interface NavigationItem {
   icon: ReactNode;
 }
 
-export const mockLobbyCountDownTimer = dayjs()
-  .tz("Australia/Melbourne")
-  .add(1, "hour")
-  .add(3, "second")
+export const mockLobbyCountDownTimer = dayjs
+  .tz("2025-01-01", "Australia/Melbourne")
   .toISOString();

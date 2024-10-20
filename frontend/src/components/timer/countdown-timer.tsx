@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
@@ -6,18 +6,17 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-type Timer = ReturnType<typeof setInterval>;
-
 interface Props {
   expiryDateTime: string;
 }
 
 export const CountdownTimer = ({ expiryDateTime }: Props) => {
   const [timeRemaining, setTimeRemaining] = useState<{
+    days: number;
     hours: number;
     minutes: number;
     seconds: number;
-  }>({ hours: 0, minutes: 0, seconds: 0 });
+  }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const melbourneTimeZone = "Australia/Melbourne";
@@ -28,30 +27,74 @@ export const CountdownTimer = ({ expiryDateTime }: Props) => {
       const delta = targetDate.diff(now);
 
       if (delta > 0) {
-        const hours = Math.floor(delta / (1000 * 60 * 60));
-        const minutes = Math.floor((delta / (1000 * 60)) % 60);
-        const seconds = Math.floor((delta / 1000) % 60);
-        setTimeRemaining({ hours, minutes, seconds });
+        const days = targetDate.diff(now, "day");
+        const hours = targetDate.subtract(days, "day").diff(now, "hour");
+        const minutes = targetDate
+          .subtract(days, "day")
+          .subtract(hours, "hour")
+          .diff(now, "minute");
+        const seconds = targetDate
+          .subtract(days, "day")
+          .subtract(hours, "hour")
+          .subtract(minutes, "minute")
+          .diff(now, "second");
+
+        setTimeRemaining({ days, hours, minutes, seconds });
       } else {
-        setTimeRemaining({ hours: 0, minutes: 0, seconds: 0 });
+        setTimeRemaining({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       }
     };
 
     calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 10);
+    const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
   }, [expiryDateTime]);
 
-  const { hours, minutes, seconds } = timeRemaining;
+  const { days, hours, minutes, seconds } = timeRemaining;
+
+  // Determine which time values to display (3 values at a time)
+  let displayValues: any[] = [];
+  let displayUnits: any[] = [];
+
+  if (days > 0) {
+    displayValues = [days, hours, minutes];
+    displayUnits = [
+      getUnit(days, "day"),
+      getUnit(hours, "hour"),
+      getUnit(minutes, "minute"),
+    ];
+  } else if (hours > 0) {
+    displayValues = [hours, minutes, seconds];
+    displayUnits = [
+      getUnit(hours, "hour"),
+      getUnit(minutes, "minute"),
+      getUnit(seconds, "second"),
+    ];
+  } else if (minutes > 0) {
+    displayValues = [minutes, seconds, 0];
+    displayUnits = [getUnit(minutes, "minute"), getUnit(seconds, "second"), ""];
+  } else if (seconds > 0) {
+    displayValues = [seconds, 0, 0];
+    displayUnits = [getUnit(seconds, "second"), "", ""];
+  }
 
   return (
     <div className="flex items-center justify-center">
-      <DigitWrapper value={hours.toString().padStart(2, "0")} unit=":" />
-      <DigitWrapper value={minutes.toString().padStart(2, "0")} unit=":" />
-      <DigitWrapper value={seconds.toString().padStart(2, "0")} unit="" />
+      {displayValues.map((value, index) => (
+        <DigitWrapper
+          key={index}
+          value={value.toString()}
+          unit={displayUnits[index]}
+        />
+      ))}
     </div>
   );
+};
+
+// Helper function to determine the unit based on the displayed value
+const getUnit = (value: number, unit: string) => {
+  return value > 1 ? `${unit}s` : unit;
 };
 
 interface DigitWrapperProps {
@@ -63,19 +106,19 @@ const DigitWrapper = ({ value, unit }: DigitWrapperProps): ReactElement => {
   const digits = value.split("");
 
   return (
-    <div className="inline-block font-semibold text-sage/80">
-      <span className="inline-block ">
+    <div className="custom-text-gradient inline-block font-semibold text-sage/80 p-4">
+      <span className="inline-block">
         {digits.map((digit, index) => (
           <span
             key={index}
-            className="inline-block  text-center  w-[4rem] text-[5rem]"
+            className="inline-block text-center w-[4rem] text-[5rem]"
           >
             {digit}
           </span>
         ))}
       </span>
       {unit && (
-        <span className=" font-[300] inline-block mt-auto pr-2 text-[7rem]">
+        <span className="font-[300] inline-block mt-auto pr-2 text-[2rem]">
           {unit}
         </span>
       )}
