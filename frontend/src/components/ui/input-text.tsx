@@ -9,16 +9,17 @@ export const InputText = forwardRef<
     <input
       className={twMerge(
         ` flex 
-            h-10
+            h-[2.5rem]
             w-full 
             rounded-md
             border 
             bg-tarantula
-            text-mist
+            text-inhert
             px-3
             py-2
             text-sm
             border-none
+            text-primary
             placeholder:text-disabled
             transition-all
             duration-200

@@ -82,7 +82,7 @@ export const LoginSimplified = () => {
 
   return (
     <div className="text-muted p-6 flex flex-col grow h-full items-center  bg-shadow rounded-md ">
-      <div className="w-full max-w-[460px] rounded mx-auto overflow-hidden ">
+      <div className="w-full max-w-[460px] rounded mx-auto overflow-hidden p-4 ">
         <form>
           <div className="flex items-center">
             <span className="ml-auto cursor-pointer hover:text-sage">

@@ -23,7 +23,7 @@ export const Home = (): ReactElement => {
       </div>
     </MaxWidthWrapper> */}
 
-      <MaxWidthWrapper className="flex flex-col min-h-[40rem]">
+      <MaxWidthWrapper className="flex flex-col min-h-[44rem]">
         <Hero />
       </MaxWidthWrapper>
 
