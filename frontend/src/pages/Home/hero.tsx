@@ -1,11 +1,8 @@
 import { Button } from "@components/ui/button";
 import { project } from "@constants";
-import { NavLink } from "react-router-dom";
 import { mockLobbyCountDownTimer, Path } from "@models";
 import { LoginSimplified } from "@pages/auth/login-simplified";
-import { GradientText } from "@components/common/gradient-text";
 import { CountdownTimer } from "@components/timer/countdown-timer";
-import { Modal } from "@components/common/Modal";
 import { useState } from "react";
 import { ReserveSpotModal } from "./reserve-spot-modal";
 

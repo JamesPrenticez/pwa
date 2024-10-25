@@ -1,3 +1,5 @@
+declare let self: ServiceWorkerGlobalScope;
+
 export function handlePushNotifications(event: any) {
   const data = event.data?.json();
   const title = data?.title || "Default title";

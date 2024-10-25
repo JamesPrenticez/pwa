@@ -13,7 +13,7 @@ export const store = configureStore({
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),
-  devTools: process.env.NODE_ENV !== "development" ? false : true,
+  devTools: import.meta.env.NODE_ENV !== "development" ? false : true,
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

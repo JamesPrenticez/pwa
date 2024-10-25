@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { ClickCounterButton } from "@components/click-counter";
+// import { ClickCounterButton } from "@components/click-counter";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
 import { BannerWithContent } from "./banner-with-content";
 

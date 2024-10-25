@@ -1,8 +1,6 @@
-import { Modal } from "@components/common/Modal";
+import { Modal } from "@components/common/modal";
 import { type Dispatch, type SetStateAction } from "react";
 
-import FemaleIcon from "../../assets/images/female.svg?react";
-import MaleIcon from "../../assets/images/male.svg?react";
 import { Label } from "@components/ui/label";
 import { InputText } from "@components/ui/input-text";
 import { ErrorMessage } from "@components/ui/error-message";
@@ -22,30 +20,18 @@ interface ReserveModalProps {
 }
 
 interface FormDetails {
-  firstname: string;
-  lastname: string;
-  email: string;
-  dob: string;
-  gender: "male" | "female" | null;
   goal: string;
+  email: string;
 }
 
 export const ReserveSpotModal = ({ isOpen, setIsOpen }: ReserveModalProps) => {
   const initialState: FormDetails = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    dob: "",
-    gender: null,
     goal: "",
+    email: "",
   };
 
   const validationSchema = createValidationSchema({
-    firstname: v.required().string(),
-    lastname: v.required().string(),
     email: v.required().string().minLength(3),
-    dob: v.required().string(),
-    gender: v.required().string(),
     goal: v.required().string().minLength(3),
   });
 
