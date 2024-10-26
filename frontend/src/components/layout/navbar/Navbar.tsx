@@ -13,7 +13,7 @@ import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
 import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 
-export const Navbar = (): ReactElement => {
+export const NavagationBar = (): ReactElement => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const userEmail = useAppSelector((state) => state.user.data.email);
