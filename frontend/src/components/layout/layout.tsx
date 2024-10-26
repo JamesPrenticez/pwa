@@ -1,5 +1,5 @@
 import { type PropsWithChildren, type ReactElement } from "react";
-import { NavagationBar } from "./navbar/navbar";
+import { NavagationBar } from "./navbar/navagation-bar";
 import { Footer } from "./footer";
 
 export const Layout = ({ children }: PropsWithChildren): ReactElement => {
