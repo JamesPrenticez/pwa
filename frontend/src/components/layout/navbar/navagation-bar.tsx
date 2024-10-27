@@ -7,12 +7,11 @@ import { NavLink, useLocation } from "react-router-dom";
 // import { useAppSelector } from "@redux/hooks";
 import { CompanyLogo } from "./company-logo";
 import { CompanyName } from "./company-name";
-import { Hamburger } from "@components/layout/navbar/hamburger";
+import { Hamburger } from "./hamburger";
 import { Button } from "@components/ui/button";
 import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
 import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
 import { MaxWidthWrapper } from "../max-width-wrapper";
-import { Path } from "@models";
 
 export const NavagationBar = (): ReactElement => {
   const location = useLocation();
