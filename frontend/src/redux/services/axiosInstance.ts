@@ -6,10 +6,11 @@ const useMockData = false; //import.meta.env.VITE_ENV === "development" ? true :
 const log = false;
 const env = import.meta.env.VITE_ENV;
 const base_URL = import.meta.env.VITE_BASE_URL;
-console.log(env);
+console.log(base_URL);
 
 export const axiosInstance = axios.create({
-  baseURL: env === "development" ? "http://localhost:5000/api/" : base_URL,
+  baseURL:
+    "selfregulator-be-cec7evcyf0h0c9ea.australiasoutheast-01.azurewebsites.net/api/", //env === "development" ? "http://localhost:5000/api/" : base_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
