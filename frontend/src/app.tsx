@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { LayoutWrapper } from "@components/layout/layout-wrapper";
 
-import { Home } from "@pages/home/home-page";
+import { HomePage } from "@pages/home/home-page";
 import { Login } from "@pages/auth/login-page";
 import { Register } from "@pages/auth/register-page";
 
@@ -14,7 +14,7 @@ function App() {
   return (
     <LayoutWrapper>
       <Routes>
-        <Route path={Path.HOME} element={<Home />} />
+        <Route path={Path.HOME} element={<HomePage />} />
         <Route path={Path.LOGIN} element={<Login />} />
         <Route path={Path.REGISTER} element={<Register />} />
         <Route path={Path.SETTINGS} element={<Settings />} />
