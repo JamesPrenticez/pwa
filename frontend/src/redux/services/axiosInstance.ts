@@ -10,12 +10,12 @@ console.log(base_URL);
 
 export const axiosInstance = axios.create({
   baseURL:
-    "selfregulator-be-cec7evcyf0h0c9ea.australiasoutheast-01.azurewebsites.net/api/", //env === "development" ? "http://localhost:5000/api/" : base_URL,
+    "https://selfregulator-be-cec7evcyf0h0c9ea.australiasoutheast-01.azurewebsites.net/api/",
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",
   },
-  withCredentials: true, // this enables us to send a HTTPOnly cookie automagically for JWT authentication
+  withCredentials: true, // Enables automatic HTTPOnly cookie sending for JWT authentication
 });
 
 if (useMockData) {
