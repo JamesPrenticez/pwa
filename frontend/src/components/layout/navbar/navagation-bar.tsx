@@ -7,16 +7,18 @@ import { NavLink, useLocation } from "react-router-dom";
 // import { useAppSelector } from "@redux/hooks";
 import { CompanyLogo } from "./company-logo";
 import { CompanyName } from "./company-name";
-import { HamburgerMenu } from "./hamburger-menu";
+// import { HamburgerMenu } from "./hamburger-menu";
 import { Button } from "@components/ui/button";
 import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
 import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
 import { MaxWidthWrapper } from "../max-width-wrapper";
+import { Path } from "@models";
+import { useAppSelector } from "@redux/hooks";
 
 export const NavagationBar = (): ReactElement => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const userEmail = useAppSelector((state) => state.user.data.email);
+  const userEmail = useAppSelector((state) => state.user.data.email);
 
   // TODO isAuth not home...
   if (["/", "/register", "/login", "/test"].includes(location.pathname)) {
@@ -41,32 +43,31 @@ export const NavagationBar = (): ReactElement => {
 
         <div className="flex">
           <OfflineModeSwitch />
-        </div>
 
-        {/* {userEmail ? (
-              <>
-                <NavLink to={Path.SETTINGS}>
-                  <Button variant="link" color="muted" className="ml-auto px-4">
-                    {userEmail}
-                  </Button>
-                </NavLink>
-                <LogoutButton/>
-              </>
-            )
-            : (
-              <>
-                <NavLink to={Paths.LOGIN}>
-                  <Button variant="link" color="muted" className="ml-auto px-4">
-                    Login
-                  </Button>
-                </NavLink>
-                <NavLink to={Paths.REGISTER}>
-                  <Button color="cta" className="px-4 ">
-                    Get Started
-                  </Button>
-                </NavLink>
-              </>
-            )} */}
+          {userEmail ? (
+            <>
+              <NavLink to={Path.SETTINGS}>
+                <Button variant="link" color="muted" className="ml-auto px-4">
+                  {userEmail}
+                </Button>
+              </NavLink>
+              {/* <LogoutButton/> */}
+            </>
+          ) : (
+            <>
+              <NavLink to={Path.LOGIN}>
+                <Button variant="link" color="muted" className="ml-auto px-4">
+                  Login
+                </Button>
+              </NavLink>
+              <NavLink to={Path.REGISTER}>
+                <Button color="cta" className="px-4 ">
+                  Get Started
+                </Button>
+              </NavLink>
+            </>
+          )}
+        </div>
       </NavbarWrapper>
     );
   }

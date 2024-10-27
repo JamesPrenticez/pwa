@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { Label } from "@components/ui/label";
 import { InputText } from "@components/ui/input-text";
@@ -30,9 +30,11 @@ import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
 export const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  const user = useAppSelector((state) => state.user.data);
+
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const user = useAppSelector((state) => state.user.data);
 
   const validationSchema = createValidationSchema({
     email: v.required().email().minLength(3),

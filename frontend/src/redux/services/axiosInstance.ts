@@ -2,16 +2,14 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { mockUsers } from "@mocks";
 
-const useMockData = true; //import.meta.env.VITE_ENV === "development" ? true : false;
+const useMockData = false; //import.meta.env.VITE_ENV === "development" ? true : false;
 const log = false;
 const env = import.meta.env.VITE_ENV;
+const base_URL = import.meta.env.VITE_BASE_URL;
 console.log(env);
 
 export const axiosInstance = axios.create({
-  baseURL:
-    env === "development"
-      ? "http://localhost:5000/api/"
-      : "https://selfregulator.azurewebsites.net/api/",
+  baseURL: env === "development" ? "http://localhost:5000/api/" : base_URL,
   headers: {
     Accept: "application/json",
     "Content-Type": "application/json",

@@ -14,7 +14,7 @@ export interface UserState {
 const initialState: UserState = {
   data: {
     id: "",
-    email: "test",
+    email: "",
     dateCreated: null,
     lastModified: null,
     type: null,
@@ -71,7 +71,7 @@ export const userSlice = createSlice({
         authApi.endpoints.register.matchFulfilled(action),
       (state, action) => {
         // Define how the state should change when any of the above actions match
-        state.data = { ...state.data, ...action.payload };
+        state.data = { ...state.data, ...action.payload.data };
       },
     );
   },

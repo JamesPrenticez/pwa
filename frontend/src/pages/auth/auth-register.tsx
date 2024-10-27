@@ -181,7 +181,7 @@ export const Register = () => {
 
           <Button
             color="gangster"
-            className="w-full mt-2 text-minor/90 font-light text-"
+            className="w-full mt-2 text-minor/90 font-light text-xl"
             onClick={handleSubmit}
           >
             Sign Up
