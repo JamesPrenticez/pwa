@@ -57,22 +57,27 @@ export const ReserveSpotModal = ({ isOpen, setIsOpen }: ReserveModalProps) => {
   }
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} className="h-auto top-[20%]">
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      className="h-auto top-[5%] md:top-[20%]"
+    >
       <div>
         <h4 className="text-lg font-medium text-mist">
           RESERVE YOUR SPOT FOR:
         </h4>
-        <h1 className="text-5xl font-bold text-sage mb-12">
+        <h1 className="text-5xl font-bold text-sage mb-6 md:mb-12">
           The 90 Day Challenge!
         </h1>
-        <form className="grid gap-4">
+        <form className="grid gap-0 md:gap-4">
           <Label value="Why do you want to join this programme?" htmlFor="goal">
             <InputTextArea
               id="goal"
               placeholder="Quit smoking and get fit and healthy again"
               value={formData.goal}
-              onChange={() => {}}
+              onChange={handleChange}
               className="focus-visible:ring-2 focus-visible:ring-major"
+              maxLength={200}
               autoFocus
             />
             <ErrorMessage message={formErrors.goal.errorMessage} />

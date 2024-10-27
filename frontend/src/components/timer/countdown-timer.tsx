@@ -106,12 +106,12 @@ const DigitWrapper = ({ value, unit }: DigitWrapperProps): ReactElement => {
   const digits = value.split("");
 
   return (
-    <div className="custom-text-gradient inline-block font-semibold text-sage/80 p-4">
-      <span className="inline-block">
+    <div className="custom-text-gradient inline-block font-semibold text-sage/80 p-4 ">
+      <span className="flex items-center justify-center md:inline-block">
         {digits.map((digit, index) => (
           <span
             key={index}
-            className="inline-block text-center w-[4rem] text-[5rem]"
+            className="inline-block text-center w-[2rem] md:w-[4rem] text-[2.5rem] md:text-[5rem]"
           >
             {digit}
           </span>

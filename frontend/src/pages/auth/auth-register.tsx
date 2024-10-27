@@ -30,8 +30,11 @@ import { User, AccountType } from "@models/user";
 import { RegisterDetails } from "@models/auth";
 // import { saveUserDataToLocalStorage, saveUserLoginToLocalStorage } from "@utils"; // TODO convert to indexedDB
 import { setSpaToken, updateUser } from "@redux/slices";
+import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
 
 export const Register = () => {
+  const isOnline = useAppSelector((state) => state.user.isOnline);
+
   const navigate = useNavigate();
 
   const [register] = useRegisterMutation();
@@ -39,7 +42,6 @@ export const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
-  const [isOfflineMode, setIsOfflineMode] = useState(true);
 
   const validationSchema = createValidationSchema({
     email: v.required().email().minLength(3),
@@ -61,7 +63,7 @@ export const Register = () => {
 
   async function handleRegister() {
     try {
-      if (isOfflineMode) {
+      if (isOnline) {
         console.log("Registering in offline mode");
 
         // Save user credentails in local storage
@@ -114,44 +116,32 @@ export const Register = () => {
   // }, [user.email, navigate]);
 
   return (
-    <div className="h-screen-4rem md:h-screen-5rem text-muted p-12 bg-night">
-      <div className="w-full max-w-[460px] bg-shadow rounded mx-auto overflow-hidden">
-        <div className="h-[180px] relative bg-[url('/bg.jpeg')] bg-cover">
-          <div
-            id="overlay"
-            className="absolute bg-gradient-to-r from-fern to-moss opacity-80 inset-0"
-          />
+    <MaxWidthWrapper>
+      <div className="mt-4 w-[90%] md:w-full max-w-[460px] bg-shadow rounded mx-auto overflow-hidden">
+        <div className="h-[180px]  relative bg-[url('/bg.jpeg')] bg-cover">
+          <div className="absolute bg-gradient-to-r from-fern to-moss opacity-80 inset-0" />
+
           <div className="relative w-full h-full flex flex-col items-center justify-center">
-            <InfoIcon
-              className="absolute top-2 right-2 cursor-pointer hover:text-sage"
-              width={24}
-              onClick={() => autoFillDetails()}
-            />
-            <h1 className="text-2xl font-bold text-white">Register</h1>
-            <p className="">Start your self improvement journey today!</p>
-            <div className="flex items-center justify-center w-[80px] h-[80px] rounded-full bg-shadow absolute bottom-[-40px]">
-              <Link to="/" className="w-[60%] h-[60%]">
+            <h1 className="text-2xl font-light text-muted">Register!</h1>
+            <p className="text-lg text-sage font-light">Welcome to the team!</p>
+            <div className="flex items-center justify-center w-[80px] h-[80px] rounded-full  absolute bottom-[-40px] border-2 border-sage/50 bg-black/70">
+              <NavLink to={Path.HOME} className="w-[60%] h-[60%]">
                 <div className="rounded-full">
-                  <img src="/logo.svg" className="rounded-full" alt="" />
+                  <img
+                    src="/logo-reverse.svg"
+                    className="rounded-full"
+                    alt=""
+                  />
                 </div>
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>
 
         <form className="p-6">
           <div className="flex items-center">
-            <span className="ml-auto ">
-              <Label
-                value={isOfflineMode ? "Offline Mode" : "Online Mode"}
-                htmlFor="offlineMode"
-              >
-                <Switch
-                  id="offlineMode"
-                  checked={!isOfflineMode}
-                  onChange={() => setIsOfflineMode((prev) => !prev)}
-                />
-              </Label>
+            <span className="ml-auto cursor-pointer hover:text-sage">
+              <InfoIcon width={24} onClick={() => autoFillDetails()} />
             </span>
           </div>
 
@@ -189,39 +179,41 @@ export const Register = () => {
             <ErrorMessage message={formErrors.password.errorMessage} />
           </Label>
 
-          <Button color="minor" className="w-full mt-2" onClick={handleSubmit}>
+          <Button
+            color="gangster"
+            className="w-full mt-2 text-minor/90 font-light text-xl"
+            onClick={handleSubmit}
+          >
             Sign Up
           </Button>
 
-          <div className="mt-4 text-[12px] text-center">
-            <p>
-              By registering you agree to our&nbsp;
-              <NavLink to={Path.TERMS_OF_SERVICE}>
-                <Button
-                  variant="link"
-                  className="inline-flex p-0 items-center text-sage hover:text-sage/50 font-bold"
-                >
-                  Terms of Service
-                </Button>
-              </NavLink>
-              &nbsp;and our&nbsp;
-              <NavLink to={Path.PRIVACY_POLICY}>
-                <Button
-                  variant="link"
-                  className="inline-flex p-0 items-center text-sage hover:text-sage/50 font-bold"
-                >
-                  Privacy Policy
-                </Button>
-              </NavLink>
-            </p>
+          <div className="mt-4 text-[0.7rem] font-light flex flex-wrap items-center leading-3 text-muted">
+            By registering you agree to our
+            <NavLink to={Path.TERMS_OF_SERVICE}>
+              <Button
+                variant="link"
+                className="inline-flex p-0 m-0 items-center text-sage hover:text-sage/50 font-light"
+              >
+                Terms of Service
+              </Button>
+            </NavLink>
+            &nbsp;and our&nbsp;
+            <NavLink to={Path.PRIVACY_POLICY}>
+              <Button
+                variant="link"
+                className="inline-flex p-0 items-center text-sage hover:text-sage/50 font-light"
+              >
+                Privacy Policy
+              </Button>
+            </NavLink>
           </div>
 
-          <div className="text-center mt-4 flex items-center justify-center flex-col">
+          <div className="text-center mt-4 flex items-center justify-center flex-col text-[1rem] font-light leading-4 text-white">
             <p>Already have an account?</p>
             <NavLink to={Path.LOGIN}>
               <Button
                 variant="link"
-                className="flex items-center text-sage font-bold"
+                className="flex items-center text-sage hover:text-sage/90 font-light"
               >
                 Login
                 <ArrowLeftIcon
@@ -241,6 +233,6 @@ export const Register = () => {
           </div>
         </form>
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 };

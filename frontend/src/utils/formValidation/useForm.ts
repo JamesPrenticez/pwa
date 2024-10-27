@@ -33,11 +33,13 @@ export function useForm<T>({
     useState<Record<string, IValidationResult>>(initialErrors);
   // console.log(formErrors)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const fieldKey = e.target.name ? e.target.name : e.target.id;
 
     if (!fieldKey) {
-      throw new Error("please provide a name or id attribute for your input");
+      throw new Error("Please provide a name or id attribute for your input");
     }
 
     const newValue = e.target.value as unknown as T[keyof T];
@@ -49,7 +51,7 @@ export function useForm<T>({
 
     // Validates the entire schema
     const validationResult = validatorFn(updatedFormData, validationSchema);
-    // Append single field to prev results, thus only preforming validation on one feild at a time
+    // Append single field to prev results, thus only performing validation on one field at a time
     const mergedValidationResult = {
       ...formErrors,
       [fieldKey]: validationResult[fieldKey],

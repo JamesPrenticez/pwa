@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import { Label } from "@components/ui/label";
 import { InputText } from "@components/ui/input-text";
@@ -25,13 +25,16 @@ import { useLoginMutation } from "@redux/services/authApi";
 import { Path } from "@models/paths";
 import type { LoginDetails } from "@models/auth";
 import type { ErrorResult } from "@models/api";
+import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
 
 export const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
-  const user = useAppSelector((state) => state.user.data);
+
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
+
+  const user = useAppSelector((state) => state.user.data);
 
   const validationSchema = createValidationSchema({
     email: v.required().email().minLength(3),
@@ -81,20 +84,26 @@ export const Login = () => {
   // }, [user.email, navigate]);
 
   return (
-    <div className="h-screen-4rem md:h-screen-5rem text-muted p-12 bg-night">
-      <div className="w-full max-w-[460px] bg-shadow rounded mx-auto overflow-hidden">
+    <MaxWidthWrapper>
+      <div className="mt-4 w-[90%] md:w-full max-w-[460px] bg-shadow rounded mx-auto overflow-hidden">
         <div className="h-[180px]  relative bg-[url('/bg.jpeg')] bg-cover">
           <div className="absolute bg-gradient-to-r from-fern to-moss opacity-80 inset-0" />
 
           <div className="relative w-full h-full flex flex-col items-center justify-center">
-            <h1 className="text-2xl font-bold text-white">Welcome Back!</h1>
-            <p className="">Sign in to continue your journey!</p>
-            <div className="flex items-center justify-center w-[80px] h-[80px] rounded-full bg-shadow absolute bottom-[-40px]">
-              <Link to="/" className="w-[60%] h-[60%]">
+            <h1 className="text-2xl font-light text-muted">Welcome Back!</h1>
+            <p className="text-lg text-sage font-light">
+              Sign in to continue your journey!
+            </p>
+            <div className="flex items-center justify-center w-[80px] h-[80px] rounded-full  absolute bottom-[-40px] border-2 border-sage/50 bg-black/70">
+              <NavLink to={Path.HOME} className="w-[60%] h-[60%]">
                 <div className="rounded-full">
-                  <img src="/logo.svg" className="rounded-full" alt="" />
+                  <img
+                    src="/logo-reverse.svg"
+                    className="rounded-full"
+                    alt=""
+                  />
                 </div>
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -118,11 +127,11 @@ export const Login = () => {
           </Label>
 
           <Label value="Password:" htmlFor="password">
-            <Link to="/password-reset" tabIndex={-1}>
+            <NavLink to={Path.PASSWORD_RESET} tabIndex={-1}>
               <p className="absolute top-[2px] right-0 text-[11px] text-mist hover:text-sage">
                 Forgot password?
               </p>
-            </Link>
+            </NavLink>
             <InputText
               id="password"
               type={showPassword ? "text" : "password"}
@@ -146,19 +155,19 @@ export const Login = () => {
           </Label>
 
           <Button
-            color="success"
-            className="w-full mt-2 bg-green-600"
+            color="gangster"
+            className="w-full mt-2 text-sage/90 font-light text-xl"
             onClick={handleSubmit}
           >
             Sign In
           </Button>
 
-          <div className="text-center mt-4 flex items-center justify-center flex-col">
+          <div className="text-center mt-4 flex items-center justify-center flex-col text-[1rem] font-light leading-4 text-white">
             <p>Dont have an account?</p>
             <NavLink to={Path.REGISTER}>
               <Button
                 variant="link"
-                className="flex items-center text-sage font-bold"
+                className="flex items-center text-minor hover:text-minor/90 font-light"
               >
                 Register now
                 <ArrowLeftIcon
@@ -176,6 +185,6 @@ export const Login = () => {
           </div>
         </form>
       </div>
-    </div>
+    </MaxWidthWrapper>
   );
 };

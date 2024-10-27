@@ -42,7 +42,7 @@ export const Modal = ({
     >
       <div
         className={twMerge(
-          "bg-tarantula rounded-md fixed z-50 top-[5%] left-[25%] w-[50%] h-[90%] p-6 border border-grass",
+          "bg-tarantula rounded-md fixed z-50 top-[5%] left-[5%] md:left-[25%] w-[90%] md:w-[50%] h-[90%] p-6 border border-grass",
           className,
         )}
         onClick={(e) => e.stopPropagation()}

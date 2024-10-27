@@ -3,6 +3,7 @@ import { Switch } from "@components/ui/switch";
 import { useAppSelector, useAppDispatch } from "@redux/hooks";
 import { toggleisOnline } from "@redux/slices";
 import { syncAllData } from "@db/sync-all-data";
+import { Label } from "@components/ui/label";
 
 export const OfflineModeSwitch = (): ReactElement => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
@@ -39,5 +40,13 @@ export const OfflineModeSwitch = (): ReactElement => {
     };
   }, [isOnline]);
 
-  return <Switch checked={isOnline} onChange={handleChange} />;
+  return (
+    <Label
+      value={isOnline ? "Online" : "Offline"}
+      htmlFor="offlineMode"
+      className={`flex items-center justify-center text-center gap-2 text-[0.8rem] ${isOnline ? "text-major/80" : "text-minor/80"} h-full`}
+    >
+      <Switch checked={isOnline} onChange={handleChange} />
+    </Label>
+  );
 };

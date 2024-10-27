@@ -4,13 +4,13 @@ import { twMerge } from "tailwind-merge";
 
 interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  // add custom props here
   maxLength?: number; // Set the maximum number of characters
 }
 
 const InputTextArea: React.FC<TextAreaProps> = ({
   className,
   maxLength,
+  onChange,
   ...props
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -31,8 +31,9 @@ const InputTextArea: React.FC<TextAreaProps> = ({
       setHeight(`${textareaRef.current.scrollHeight}px`);
     }
 
-    if (props.onChange) {
-      props.onChange(e);
+    // Call the onChange passed as a prop
+    if (onChange) {
+      onChange(e);
     }
   };
 
@@ -40,7 +41,7 @@ const InputTextArea: React.FC<TextAreaProps> = ({
     <textarea
       className={twMerge(
         `flex 
-        min-h-[2.5rem]
+        min-h-[3.5rem]
         w-full 
         rounded-md
         border 
