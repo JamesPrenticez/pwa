@@ -28,7 +28,7 @@ export const Home = (): ReactElement => {
       </MaxWidthWrapper>
 
       <BannerWithContent title={project.move}></BannerWithContent>
-
+{/* 
       <MaxWidthWrapper className="flex flex-col min-h-[50rem]">
         <div className="grid grid-cols-3 gap-10">
           <div className="flex flex-col items-center border-2 rounded">
@@ -50,9 +50,9 @@ export const Home = (): ReactElement => {
             <h1>Cardiovascular</h1>
           </div>
         </div>
-      </MaxWidthWrapper>
+      </MaxWidthWrapper> */}
 
-      <div>
+      {/* <div>
         <h1>Connect with others around the world!</h1>
         <p>
           Join our global community and surround yourself with like minded
@@ -60,7 +60,7 @@ export const Home = (): ReactElement => {
         </p>
 
         <MapSVG width={400} height={200} />
-      </div>
+      </div> */}
     </div>
   );
 };
