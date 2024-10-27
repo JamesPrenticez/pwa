@@ -10,7 +10,7 @@ import { BannerWithContent } from "./banner-with-content";
 import { Hero } from "./hero";
 import { project } from "@constants";
 
-export const HomePage = (): ReactElement => {
+export const Home = (): ReactElement => {
   return (
     <div>
       {/* <MaxWidthWrapper className="flex flex-col min-h-[50rem]">
