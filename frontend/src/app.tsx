@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { LayoutWrapper } from "@components/layout/layout-wrapper";
 
-import { Home } from "@pages/home/home";
+import { Home } from "@pages/homepage/home";
 import { Login } from "@pages/auth/login-page";
 import { Register } from "@pages/auth/register-page";
 
