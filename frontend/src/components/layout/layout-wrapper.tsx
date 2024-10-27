@@ -2,7 +2,9 @@ import { type PropsWithChildren, type ReactElement } from "react";
 import { NavagationBar } from "./navbar/navagation-bar";
 import { Footer } from "./footer";
 
-export const Layout = ({ children }: PropsWithChildren): ReactElement => {
+export const LayoutWrapper = ({
+  children,
+}: PropsWithChildren): ReactElement => {
   return (
     <div className="relative font-outfit flex flex-col h-full max-h-[100dvh] flex-grow overflow-hidden">
       <NavagationBar />
