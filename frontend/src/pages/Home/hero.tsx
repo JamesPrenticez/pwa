@@ -12,7 +12,9 @@ export const Hero = () => {
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4 mt-[2rem] md:mt-[6rem] mb-[4rem] h-full">
       <div className="flex flex-col justify-center items-center grow">
-        <h1 className="text-[1.8rem] px-2 text-sage md:text-7xl text-center md:text-left">{project.best}</h1>
+        <h1 className="text-[1.8rem] px-2 text-sage md:text-7xl text-center md:text-left">
+          {project.best}
+        </h1>
         {/* <h1 className='text-3xl text-gray-300'>{project.record}</h1> */}
 
         <div className="mt-[2rem] md:mt-[4rem] flex flex-col items-center gap-2 md:gap-8">

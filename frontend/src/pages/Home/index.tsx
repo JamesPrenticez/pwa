@@ -28,7 +28,7 @@ export const Home = (): ReactElement => {
       </MaxWidthWrapper>
 
       <BannerWithContent title={project.move}></BannerWithContent>
-{/* 
+      {/* 
       <MaxWidthWrapper className="flex flex-col min-h-[50rem]">
         <div className="grid grid-cols-3 gap-10">
           <div className="flex flex-col items-center border-2 rounded">

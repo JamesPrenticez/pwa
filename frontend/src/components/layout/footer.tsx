@@ -1,8 +1,11 @@
-import type { ReactElement } from "react";
+import { useMemo, type ReactElement } from "react";
+import dayjs from "dayjs";
 
 export const Footer = (): ReactElement => {
+  const yearString = useMemo(() => dayjs().format("YYYY"), []);
+
   return (
-    <footer className="w-full h-64 text-theme-secondary pt-5 bg-tarantula text-secondary">
+    <footer className="w-full h-64 text-theme-secondary pt-5 bg-tarantula text-secondary text-[1.2rem]">
       <div className="mt-16 w-full flex items-center justify-center ">
         <a
           href="https://github.com/JamesPrenticez"
@@ -22,7 +25,8 @@ export const Footer = (): ReactElement => {
         </a>
       </div>
       <p className="w-full flex items-center justify-center mt-3">
-        <span className="font-bold pr-2">Created by:</span>James Prentice 2023
+        <span className="font-bold pr-2">Created by:</span>James Prentice{" "}
+        {yearString}
       </p>
     </footer>
   );

@@ -24,8 +24,9 @@ export const BannerWithContent = ({ title, children }: BannerProps) => {
           "
       >
         <div className="bg-[url('../assets/triangle-bg.png'),linear-gradient(to_right,#1f1d1e3b,#3d3a3f37)] absolute inset-0 flex items-center justify-center">
-
-        <h1 className="text-2xl text-center md:text-5xl font-[600]">{title}</h1>
+          <h1 className="text-2xl text-center md:text-5xl font-[600]">
+            {title}
+          </h1>
         </div>
         <div className="bg-glass opacity-50 flex absolute inset-0" />
       </div>
