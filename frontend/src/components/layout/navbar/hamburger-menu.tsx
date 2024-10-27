@@ -5,7 +5,7 @@ interface HamburgerProps {
   setIsMenuOpen: () => void;
 }
 
-export const Hamburger = ({
+export const HamburgerMenu = ({
   isMenuOpen,
   setIsMenuOpen,
 }: HamburgerProps): ReactElement => {

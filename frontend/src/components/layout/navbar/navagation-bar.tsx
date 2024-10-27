@@ -7,7 +7,7 @@ import { NavLink, useLocation } from "react-router-dom";
 // import { useAppSelector } from "@redux/hooks";
 import { CompanyLogo } from "./company-logo";
 import { CompanyName } from "./company-name";
-import { Hamburger } from "./hamburger";
+import { HamburgerMenu } from "./hamburger-menu";
 import { Button } from "@components/ui/button";
 import { OfflineModeSwitch } from "@components/pwa/offline-mode-switch";
 import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
@@ -79,7 +79,7 @@ export const NavagationBar = (): ReactElement => {
           {/* <WeekNumber /> */}
 
           <div className="flex space-x-4 ml-auto">
-            <Hamburger
+            <HamburgerMenu
               isMenuOpen={isMenuOpen}
               setIsMenuOpen={() => {
                 setIsMenuOpen((prevState) => !prevState);
