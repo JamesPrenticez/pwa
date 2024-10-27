@@ -11,10 +11,15 @@ export const Label = forwardRef<HTMLLabelElement, Props>(
   ({ value, className, children, ...props }, ref) => {
     return (
       <div className="pb-4 relative">
-        <label ref={ref} {...props} className={twMerge("", className)}>
-          <h5 className="text-[1.2rem] mt-2 mb-[2px] font-light text-primary">
-            {value}
-          </h5>
+        <label
+          ref={ref}
+          {...props}
+          className={twMerge(
+            "text-[1.2rem] mt-2 mb-[2px] font-light text-primary",
+            className,
+          )}
+        >
+          <h5 className="">{value}</h5>
           {children}
         </label>
       </div>

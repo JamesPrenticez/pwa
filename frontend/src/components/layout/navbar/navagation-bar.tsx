@@ -19,7 +19,7 @@ export const NavagationBar = (): ReactElement => {
   // const userEmail = useAppSelector((state) => state.user.data.email);
 
   // TODO isAuth not home...
-  if (location.pathname === "/") {
+  if (["/", "/register", "/login", "/test"].includes(location.pathname)) {
     return (
       <NavbarWrapper>
         <div className="flex">
@@ -39,9 +39,11 @@ export const NavagationBar = (): ReactElement => {
           ))}
         </ul>
 
-        <div>
+        <div className="flex">
           <OfflineModeSwitch />
-          {/* {userEmail ? (
+        </div>
+
+        {/* {userEmail ? (
               <>
                 <NavLink to={Path.SETTINGS}>
                   <Button variant="link" color="muted" className="ml-auto px-4">
@@ -65,27 +67,26 @@ export const NavagationBar = (): ReactElement => {
                 </NavLink>
               </>
             )} */}
-        </div>
       </NavbarWrapper>
     );
   }
 
   return (
-    <>
+    <NavbarWrapper>
       <div className="h-[4rem] md:h-[5rem] bg-tarantula text-muted flex font-semibold px-4">
         <div className="flex items-center max-w-7xl w-full mx-auto">
           <CompanyLogo onClick={() => setIsMenuOpen(false)} />
 
           {/* <WeekNumber /> */}
 
-          <div className="flex space-x-4 ml-auto">
+          {/* <div className="flex space-x-4 ml-auto">
             <HamburgerMenu
               isMenuOpen={isMenuOpen}
               setIsMenuOpen={() => {
                 setIsMenuOpen((prevState) => !prevState);
               }}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       {/* <RightNav
@@ -93,7 +94,7 @@ export const NavagationBar = (): ReactElement => {
         setIsMenuOpen={() => { setIsMenuOpen((prevState) => !prevState) }}
         menuItems={navigationItemsForAuthenticedUsers}
       /> */}
-    </>
+    </NavbarWrapper>
   );
 };
 
@@ -103,7 +104,7 @@ interface NavbarWrapperProps {
 
 const NavbarWrapper = ({ children }: NavbarWrapperProps) => {
   return (
-    <div className="h-[4rem] md:h-[5rem] bg-tarantula flex font-[400] text-[16px] px-4 absolute top-0 right-0 left-0">
+    <div className="h-[4rem] md:h-[5rem] bg-tarantula flex font-[400] px-4 absolute top-0 right-[4px] md:right-[16px] left-0">
       <MaxWidthWrapper className="flex items-center justify-between  w-full mx-auto">
         {children}
       </MaxWidthWrapper>

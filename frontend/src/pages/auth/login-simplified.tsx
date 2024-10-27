@@ -83,8 +83,8 @@ export const LoginSimplified = () => {
   return (
     <div className="text-muted p-6 flex flex-col grow h-full items-center  bg-shadow rounded-md ">
       <div className="w-full max-w-[460px] rounded mx-auto overflow-hidden p-4 ">
-        <form>
-          <div className="flex items-center">
+        <form className="relative">
+          <div className="flex items-center absolute top-[0.25rem] right-0">
             <span className="ml-auto cursor-pointer hover:text-sage">
               <InfoIcon width={24} onClick={() => autoFillDetails()} />
             </span>

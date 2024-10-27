@@ -57,7 +57,11 @@ export const ReserveSpotModal = ({ isOpen, setIsOpen }: ReserveModalProps) => {
   }
 
   return (
-    <Modal isOpen={isOpen} setIsOpen={setIsOpen} className="h-auto top-[5%] md:top-[20%]">
+    <Modal
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      className="h-auto top-[5%] md:top-[20%]"
+    >
       <div>
         <h4 className="text-lg font-medium text-mist">
           RESERVE YOUR SPOT FOR:
@@ -73,6 +77,7 @@ export const ReserveSpotModal = ({ isOpen, setIsOpen }: ReserveModalProps) => {
               value={formData.goal}
               onChange={handleChange}
               className="focus-visible:ring-2 focus-visible:ring-major"
+              maxLength={200}
               autoFocus
             />
             <ErrorMessage message={formErrors.goal.errorMessage} />
