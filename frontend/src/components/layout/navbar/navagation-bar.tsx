@@ -55,6 +55,11 @@ export const NavagationBar = (): ReactElement => {
             </>
           ) : (
             <>
+              <NavLink to={Path.SETTINGS}>
+                <Button variant="link" color="muted" className="ml-auto px-4">
+                  Settings
+                </Button>
+              </NavLink>
               <NavLink to={Path.LOGIN}>
                 <Button variant="link" color="muted" className="ml-auto px-4">
                   Login
