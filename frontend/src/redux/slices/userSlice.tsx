@@ -4,21 +4,16 @@ import { authApi } from "@redux/services/authApi";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { User } from "@models/user";
+import { defaultUser } from "@mocks";
 
 export interface UserState {
-  data: User;
+  data: User | null;
   spaToken: string | null;
   isOnline: boolean;
 }
 
 const initialState: UserState = {
-  data: {
-    id: "",
-    email: "",
-    dateCreated: null,
-    lastModified: null,
-    type: null,
-  },
+  data: null,
   isOnline: false,
   spaToken: null,
 };
@@ -28,17 +23,20 @@ export const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateUser: (state, action: PayloadAction<Partial<User> | null>) => {
-      if (state.data) {
-        state.data = { ...state.data, ...action.payload };
+      if (action.payload) {
+        state.data = state.data
+          ? { ...state.data, ...action.payload }
+          : (action.payload as User); // Ensures type compatibility
       }
     },
     updateUserField: (
       state,
-      action: PayloadAction<{ key: keyof User; value: any }>,
+      action: PayloadAction<{ key: keyof User; value: User[keyof User] }>,
     ) => {
       const { key, value } = action.payload;
-      if (key in state.data) {
-        (state.data as any)[key] = value; // Use type assertion to narrow down the type
+      if (state.data && key in state.data) {
+        (state.data[key as keyof typeof state.data] as User[keyof User]) =
+          value;
       }
     },
     toggleisOnline: (state) => {

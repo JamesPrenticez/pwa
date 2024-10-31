@@ -31,14 +31,15 @@ import { RegisterDetails } from "@models/auth";
 // import { saveUserDataToLocalStorage, saveUserLoginToLocalStorage } from "@utils"; // TODO convert to indexedDB
 import { setSpaToken, updateUser } from "@redux/slices";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
+import { insert, StoreName } from "@db";
 
 export const Register = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const [register] = useRegisterMutation();
-  const dispatch = useAppDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
   const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
@@ -66,10 +67,7 @@ export const Register = () => {
       if (isOnline) {
         console.log("Registering in offline mode");
 
-        // Save user credentails in local storage
-        // const spaToken = saveUserLoginToLocalStorage(formData.email, formData.password); // TODO convert to indexedDB
-
-        //  Update the Redux state
+        // Save user credentials and user data to IndexedDB
         const newOfflineUserData: User = {
           id: formData.email, // or a generated ID
           email: formData.email,
@@ -78,18 +76,23 @@ export const Register = () => {
           type: AccountType.OFFLINE,
         };
 
-        // Save user data in local storage (seperate from the credentials)
-        // saveUserDataToLocalStorage(newOfflineUserData); // TODO convert to indexedDB
+        // Save credentials and user data to IndexedDB
+        await insert(
+          { email: formData.email, password: formData.password },
+          StoreName.USER_DATA,
+        );
+        await insert(newOfflineUserData, StoreName.USER_DATA);
 
         // Update Redux state with offline account data
+        console.log("update redux");
+        console.log(newOfflineUserData);
         dispatch(updateUser(newOfflineUserData));
-        // dispatch(setSpaToken(spaToken)); // TODO convert to indexedDB
 
         navigate(Path.SETTINGS);
-        console.log("Registration successful. Redirecting..."); // TODO logger
+        console.log("Registration successful. Redirecting...");
       } else {
         console.log("Registering in online mode");
-        await register(formData).unwrap(); // api match updates redux, we dont have handle that here
+        await register(formData).unwrap(); // API match updates Redux, no need to handle that here
         navigate(Path.SETTINGS);
         console.log("Registration successful. Redirecting...");
       }

@@ -19,22 +19,28 @@ import {
   v,
 } from "@utils/formValidation";
 
-import { useAppSelector } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { useLoginMutation } from "@redux/services/authApi";
 
 import { Path } from "@models/paths";
 import type { LoginDetails } from "@models/auth";
 import type { ErrorResult } from "@models/api";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
+import { updateUser } from "@redux/slices";
+import { getById, StoreName } from "@db";
+import { AccountType, User } from "@models";
+import dayjs from "dayjs";
 
 export const Login = () => {
+  const isOnline = useAppSelector((state) => state.user.isOnline);
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const [login] = useLoginMutation();
 
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-
-  const user = useAppSelector((state) => state.user.data);
 
   const validationSchema = createValidationSchema({
     email: v.required().email().minLength(3),
@@ -56,12 +62,47 @@ export const Login = () => {
 
   async function handleLogin() {
     try {
-      // TODO OFFLINE MODE
+      if (isOnline) {
+        console.log("Logging in online mode");
 
-      await login(formData).unwrap();
-      // set cookie
-      navigate(Path.SETTINGS);
-      console.log("Login successful. Redirecting...");
+        const response = await login(formData).unwrap();
+        // Update redux
+        dispatch(updateUser(response.data));
+
+        // set cookie here if required
+        navigate(Path.SETTINGS);
+        console.log("Login successful. Redirecting...");
+      } else {
+        console.log("Logging in offline mode");
+
+        // Retrieve stored user credentials from IndexedDB
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // assuming email is used as the ID
+        );
+
+        // Check if credentials match
+        if (storedUserData && storedUserData.password === formData.password) {
+          // Dispatch Redux state update for offline user
+          const offlineUserData: User = {
+            id: storedUserData.email,
+            email: storedUserData.email,
+            dateCreated: dayjs().toISOString(),
+            lastModified: dayjs().toISOString(),
+            type: AccountType.OFFLINE,
+          };
+
+          dispatch(updateUser(offlineUserData));
+          navigate(Path.SETTINGS);
+          console.log("Offline login successful. Redirecting...");
+        } else {
+          setInvalidCredentials(true);
+          console.error("Invalid credentials for offline login.");
+        }
+      }
     } catch (error: any) {
       if (error.status === 401) {
         setInvalidCredentials(true);

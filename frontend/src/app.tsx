@@ -9,6 +9,7 @@ import { Register } from "@pages/auth/register-page";
 import { Path } from "@models/paths";
 import { Test } from "@pages/test";
 import { Settings } from "@pages/settings";
+import { ProtectedRoute } from "@components/auth/protected-route";
 
 function App() {
   return (
@@ -17,7 +18,14 @@ function App() {
         <Route path={Path.HOME} element={<Home />} />
         <Route path={Path.LOGIN} element={<Login />} />
         <Route path={Path.REGISTER} element={<Register />} />
-        <Route path={Path.SETTINGS} element={<Settings />} />
+        <Route
+          path={Path.SETTINGS}
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/test" element={<Test />} />
       </Routes>
     </LayoutWrapper>

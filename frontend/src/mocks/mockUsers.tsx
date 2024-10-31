@@ -6,6 +6,23 @@ import {
 } from "@models/user";
 import dayjs from "dayjs";
 
+export const defaultUser: User = {
+  id: "123456",
+  email: "john@sealy.net",
+  firstName: "john",
+  lastName: "sealey",
+  phone: "123456789",
+  profilePicture:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/John_Sealy_Townsend.jpg/220px-John_Sealy_Townsend.jpg",
+  country: "New Zealand",
+  locale: "en-gb",
+  permissions: [UserPermissions.ADMIN],
+  subscription: UserSubscription.FREE,
+  dateCreated: dayjs().toISOString(),
+  lastModified: dayjs().toISOString(),
+  type: AccountType.ONLINE,
+};
+
 export const mockUsers: User[] = [
   {
     id: "123456",

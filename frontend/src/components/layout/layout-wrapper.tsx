@@ -1,4 +1,9 @@
-import { type PropsWithChildren, type ReactElement } from "react";
+import {
+  useEffect,
+  useRef,
+  type PropsWithChildren,
+  type ReactElement,
+} from "react";
 import { NavagationBar } from "./navbar/navagation-bar";
 import { Footer } from "./footer";
 

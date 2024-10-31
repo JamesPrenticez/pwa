@@ -44,6 +44,15 @@ if (useMockData) {
     return [200, { message: "success" }];
   });
 
+  mockAxiosInstance.onPost("/login").reply((config) => {
+    console.log(`Login request made with ${config.data}!`);
+    return [200, { data: mockUsers[0] }];
+  });
+
+  mockAxiosInstance.onPost("/register").reply((config) => {
+    console.log(`Register request made with ${config.data}!`);
+    return [200, { data: mockUsers[0] }];
+  });
   //============================================
   // PUT
   //============================================

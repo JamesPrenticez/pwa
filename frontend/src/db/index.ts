@@ -1,14 +1,15 @@
 // db.ts
-const DB_NAME = "PWA-DB";
+const DB_NAME = "PWA-DB-2";
 
 export enum StoreName {
   CLICK_COUNTER = "click-counter",
   USER_DATA = "user-data",
+  SPA_TOKEN = "spa-token",
   SETTINGS = "settings",
   // Add more store names as needed
 }
 
-const VERSION = 1;
+const VERSION = 2;
 
 // Create a utility function to open the database
 const openDatabase = () => {
@@ -54,7 +55,7 @@ export const get = async <T>(store_name: StoreName): Promise<T[]> => {
 // Get data from the specified store by ID
 export const getById = async <T>(
   store_name: StoreName,
-  id: number,
+  id: string,
 ): Promise<T | null> => {
   const db = await openDatabase();
   const transaction = db.transaction(store_name, "readonly");

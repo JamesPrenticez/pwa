@@ -19,17 +19,26 @@ import {
   v,
 } from "@utils/formValidation";
 
-import { useAppSelector } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { useLoginMutation } from "@redux/services/authApi";
 
 import { Path } from "@models/paths";
 import type { LoginDetails } from "@models/auth";
 import type { ErrorResult } from "@models/api";
+import { updateUser } from "@redux/slices";
+import { get, getById, insert, StoreName, update } from "@db";
+import { AccountType, User } from "@models";
+import dayjs from "dayjs";
+import { generateSPAToken } from "@utils/generateSpaToken";
 
 export const LoginSimplified = () => {
+  const isOnline = useAppSelector((state) => state.user.isOnline);
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const [login] = useLoginMutation();
-  const user = useAppSelector((state) => state.user.data);
+
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
@@ -53,12 +62,64 @@ export const LoginSimplified = () => {
 
   async function handleLogin() {
     try {
-      // TODO OFFLINE MODE
+      if (isOnline) {
+        console.log("Logging in online mode");
 
-      await login(formData).unwrap();
-      // set cookie
-      navigate(Path.SETTINGS);
-      console.log("Login successful. Redirecting...");
+        // Generate and set spa token in IndexedDB
+        const token = generateSPAToken();
+        const tokenData = { key: "spa_token", value: token };
+
+        // Login logic
+        const response = await login(formData).unwrap();
+
+        // Update Redux state with user data
+        dispatch(updateUser(response.data));
+        await insert(response.data, StoreName.USER_DATA);
+
+        // Check if existing SPA Token
+        const existingTokens = await get(StoreName.SPA_TOKEN);
+        if (existingTokens.length > 0) {
+          await update(tokenData, StoreName.SPA_TOKEN); // Update existing token
+        } else {
+          await insert(tokenData, StoreName.SPA_TOKEN)
+            .then(() => console.log("SPA Token stored successfully"))
+            .catch((err) => console.error("Error storing SPA Token:", err));
+        }
+
+        // Navigate to settings
+        navigate(Path.SETTINGS);
+        console.log("Login successful. Redirecting...");
+      } else {
+        console.log("Logging in offline mode");
+
+        // Retrieve stored user credentials from IndexedDB
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // assuming email is used as the ID
+        );
+
+        // Check if credentials match
+        if (storedUserData && storedUserData.password === formData.password) {
+          // Dispatch Redux state update for offline user
+          const offlineUserData: User = {
+            id: storedUserData.email,
+            email: storedUserData.email,
+            dateCreated: dayjs().toISOString(),
+            lastModified: dayjs().toISOString(),
+            type: AccountType.OFFLINE,
+          };
+
+          dispatch(updateUser(offlineUserData));
+          navigate(Path.SETTINGS);
+          console.log("Offline login successful. Redirecting...");
+        } else {
+          setInvalidCredentials(true);
+          console.error("Invalid credentials for offline login.");
+        }
+      }
     } catch (error: any) {
       if (error.status === 401) {
         setInvalidCredentials(true);
