@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { NavLink } from "react-router-dom";
 
 interface CompanyLogoProps {
-  onClick: () => void;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export const CompanyLogo = ({ onClick }: CompanyLogoProps): ReactElement => {
@@ -15,7 +15,7 @@ export const CompanyLogo = ({ onClick }: CompanyLogoProps): ReactElement => {
           fill="#00ff00E6"
           width={28}
           height={28}
-          onClick={onClick}
+          onClick={() => onClick}
         >
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">

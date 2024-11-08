@@ -9,7 +9,7 @@ interface Props {
   toggleIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MobileMenu = ({ isMenuOpen, toggleIsMenuOpen }: Props) => {
+export const MobileMenu = ({ isMenuOpen, toggleIsMenuOpen }: Props) => {
   return (
     <div
       className={`absolute inset-[4.5rem_0rem_auto_auto] bg-primary z-40 rounded-lg shadow-custom w-[15rem] border border-major/50
@@ -42,5 +42,3 @@ const MobileMenu = ({ isMenuOpen, toggleIsMenuOpen }: Props) => {
     </div>
   );
 };
-
-export default MobileMenu;
