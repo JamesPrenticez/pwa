@@ -1,7 +1,11 @@
 import {
+  AuthedNavigationItem,
+  Path,
   // Path,
   type NavigationItem,
 } from "@models";
+
+import { CalendarIcon, SettingsIcon, StopWatchIcon } from "@components/icons";
 
 export const project = {
   name: "Self Regulator",
@@ -36,3 +40,30 @@ export const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
 // "Show progress"
 // "Break records"
 // "Crush goals"
+
+export const navbarLinkItems: Record<string, AuthedNavigationItem> = {
+  TEST: {
+    name: "This should be disabled",
+    path: Path.ABOUT,
+    desc: "Why",
+    disabled: true,
+  },
+  CALENDAR: {
+    name: "CALENDAR",
+    path: Path.CALENDAR,
+    desc: "Calendar",
+    icon: <CalendarIcon width="1.8rem" height="1.8rem" />,
+  },
+  STOPWATCH: {
+    name: "Stopwatch",
+    path: Path.STOPWATCH,
+    desc: "Stopwatch",
+    icon: <StopWatchIcon width="1.9rem" height="1.9rem" />,
+  },
+  SETTINGS: {
+    name: "Settings",
+    path: Path.SETTINGS,
+    desc: "Settings",
+    icon: <SettingsIcon width="1.8rem" height="1.8rem" />,
+  },
+};

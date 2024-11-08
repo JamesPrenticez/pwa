@@ -56,10 +56,11 @@ export default defineConfig({
       },
 
       manifest: {
-        name: "my-pwa-app",
-        short_name: "pwa",
-        description: "boilerplate for pwa",
+        name: "SelfRegulator",
+        short_name: "selfregulator",
+        description: "The world's most powerful self development platform.",
         theme_color: "#00FF00",
+        start_url: "/",
       },
 
       workbox: {

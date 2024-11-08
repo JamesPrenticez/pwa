@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactElement } from "react";
 import { get, update, StoreName, insert } from "@db";
+import { Button } from "./ui/button";
 
 interface ClickCount {
   id?: number; // Optional ID for auto-incremented records
@@ -33,11 +34,20 @@ export const ClickCounterButton = (): ReactElement => {
     // Check if we have any existing records and update them
     const counts = await get<ClickCount>(StoreName.CLICK_COUNTER);
     if (counts.length > 0) {
-      await update(data, StoreName.CLICK_COUNTER); // Update existing count
+      await update(data, StoreName.CLICK_COUNTER, "click"); // Update existing count
     } else {
-      await insert(data, StoreName.CLICK_COUNTER); // Insert new count if no record exists
+      await insert(data, StoreName.CLICK_COUNTER, "click"); // Insert new count if no record exists
     }
   };
 
-  return <button onClick={handleClick}>Clicked {clickCount} times</button>;
+  return (
+    <Button
+      onClick={handleClick}
+      color="gangster"
+      variant="filled"
+      className="w-[18rem] text-wrap"
+    >
+      Magic button clicked {clickCount} times
+    </Button>
+  );
 };

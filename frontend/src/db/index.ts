@@ -1,14 +1,15 @@
 // db.ts
-const DB_NAME = "PWA-DB";
+const DB_NAME = "PWA-DB-2";
 
 export enum StoreName {
   CLICK_COUNTER = "click-counter",
   USER_DATA = "user-data",
+  SPA_TOKEN = "spa-token",
   SETTINGS = "settings",
   // Add more store names as needed
 }
 
-const VERSION = 1;
+const VERSION = 2;
 
 // Create a utility function to open the database
 const openDatabase = () => {
@@ -54,7 +55,7 @@ export const get = async <T>(store_name: StoreName): Promise<T[]> => {
 // Get data from the specified store by ID
 export const getById = async <T>(
   store_name: StoreName,
-  id: number,
+  id: string,
 ): Promise<T | null> => {
   const db = await openDatabase();
   const transaction = db.transaction(store_name, "readonly");
@@ -71,10 +72,14 @@ export const getById = async <T>(
 export const insert = async (
   data: { [key: string]: any },
   store_name: StoreName,
+  id: string, // Add id parameter
 ) => {
   const db = await openDatabase();
   const transaction = db.transaction(store_name, "readwrite");
   const store = transaction.objectStore(store_name);
+
+  // Set the id field in the data before inserting
+  data.id = id;
 
   return new Promise<void>((resolve, reject) => {
     const insertRequest = store.add(data); // Use .add() to insert new data
@@ -87,21 +92,22 @@ export const insert = async (
 export const update = async (
   data: { [key: string]: any },
   store_name: StoreName,
+  id: string,
 ) => {
   const db = await openDatabase();
   const transaction = db.transaction(store_name, "readwrite");
   const store = transaction.objectStore(store_name);
 
-  // Get all existing records
-  const getAllRequest = store.getAll();
+  console.log("update");
+  // Get the record by id
+  const getRequest = store.get(id);
 
   return new Promise<void>((resolve, reject) => {
-    getAllRequest.onsuccess = () => {
-      const existingRecords = getAllRequest.result;
+    getRequest.onsuccess = () => {
+      const existingRecord = getRequest.result;
 
-      if (existingRecords.length > 0) {
-        const existingRecord = existingRecords[0]; // Use the first (and only) record
-        data.id = existingRecord.id; // Maintain the existing id
+      if (existingRecord) {
+        data.id = existingRecord.id; // Ensure the id is maintained
 
         // Put the updated record back into the store
         const updateRequest = store.put(data);
@@ -109,11 +115,11 @@ export const update = async (
         updateRequest.onsuccess = () => resolve();
         updateRequest.onerror = (err) => reject(err);
       } else {
-        reject("No record found to update.");
+        reject("No record found with the specified id.");
       }
     };
 
-    getAllRequest.onerror = (err) => reject(err);
+    getRequest.onerror = (err) => reject(err);
   });
 };
 

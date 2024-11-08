@@ -31,14 +31,16 @@ import { RegisterDetails } from "@models/auth";
 // import { saveUserDataToLocalStorage, saveUserLoginToLocalStorage } from "@utils"; // TODO convert to indexedDB
 import { setSpaToken, updateUser } from "@redux/slices";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
+import { getById, insert, StoreName, update } from "@db";
+import { generateSPAToken } from "@utils/generate-spa-token";
 
 export const Register = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const [register] = useRegisterMutation();
-  const dispatch = useAppDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
   const [emailAlreadyExists, setEmailAlreadyExists] = useState(false);
@@ -63,33 +65,88 @@ export const Register = () => {
 
   async function handleRegister() {
     try {
-      if (isOnline) {
+      if (!isOnline) {
         console.log("Registering in offline mode");
 
-        // Save user credentails in local storage
-        // const spaToken = saveUserLoginToLocalStorage(formData.email, formData.password); // TODO convert to indexedDB
+        // Check if user already exists in Index DB
+        const storedUserData = await getById<{
+          id: string;
+          email: string;
+          dateCreated: string;
+          lastModified: string;
+          type: AccountType.OFFLINE;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // as the ID
+        );
 
-        //  Update the Redux state
-        const newOfflineUserData: User = {
-          id: formData.email, // or a generated ID
-          email: formData.email,
-          dateCreated: dayjs().toISOString(),
-          lastModified: dayjs().toISOString(),
-          type: AccountType.OFFLINE,
-        };
+        if (!storedUserData) {
+          // Save user credentials and user data to IndexedDB
+          const newOfflineUserData: User = {
+            id: formData.email, // or a generated ID
+            email: formData.email,
+            dateCreated: dayjs().toISOString(),
+            lastModified: dayjs().toISOString(),
+            type: AccountType.OFFLINE,
+          };
 
-        // Save user data in local storage (seperate from the credentials)
-        // saveUserDataToLocalStorage(newOfflineUserData); // TODO convert to indexedDB
+          // Save credentials and user data to IndexedDB
+          await insert(
+            { ...newOfflineUserData, password: formData.password },
+            StoreName.USER_DATA,
+            formData.email,
+          );
+          dispatch(updateUser(newOfflineUserData));
+        } else {
+          dispatch(updateUser(storedUserData));
+        }
 
-        // Update Redux state with offline account data
-        dispatch(updateUser(newOfflineUserData));
-        // dispatch(setSpaToken(spaToken)); // TODO convert to indexedDB
+        // Update SPA Token
+        const token = generateSPAToken();
+        // await ({token: token}, StoreName.SPA_TOKEN, "spa_token");
+        const existingSPAToken = await getById<{ token: string }>(
+          StoreName.SPA_TOKEN,
+          "spa_token",
+        );
 
+        if (existingSPAToken) {
+          console.log("Found existing spaToken - updating ...");
+          await update({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+        } else {
+          console.log("No token found - inserting new ...");
+          await insert({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+        }
+
+        dispatch(setSpaToken(token));
+
+        // Navigate
         navigate(Path.SETTINGS);
-        console.log("Registration successful. Redirecting..."); // TODO logger
+        console.log("Registration successful. Redirecting...");
       } else {
         console.log("Registering in online mode");
-        await register(formData).unwrap(); // api match updates redux, we dont have handle that here
+        const response = await register(formData).unwrap(); // API match updates Redux, no need to handle that here
+
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // as the ID
+        );
+
+        if (storedUserData?.email !== formData.email) {
+          await insert(
+            { ...response.data, password: formData.password },
+            StoreName.USER_DATA,
+            formData.email,
+          );
+        }
+
+        // Update Redux
+        dispatch(updateUser(response.data));
+        dispatch(setSpaToken(generateSPAToken()));
+
+        // Navigate
         navigate(Path.SETTINGS);
         console.log("Registration successful. Redirecting...");
       }

@@ -19,17 +19,26 @@ import {
   v,
 } from "@utils/formValidation";
 
-import { useAppSelector } from "@redux/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/hooks";
 import { useLoginMutation } from "@redux/services/authApi";
 
 import { Path } from "@models/paths";
 import type { LoginDetails } from "@models/auth";
 import type { ErrorResult } from "@models/api";
+import { setSpaToken, updateUser } from "@redux/slices";
+import { get, getById, insert, StoreName, update } from "@db";
+import { AccountType, User } from "@models";
+import dayjs from "dayjs";
+import { generateSPAToken } from "@utils/generate-spa-token";
 
 export const LoginSimplified = () => {
+  const isOnline = useAppSelector((state) => state.user.isOnline);
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
+
   const [login] = useLoginMutation();
-  const user = useAppSelector((state) => state.user.data);
+
   const [showPassword, setShowPassword] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
@@ -53,12 +62,59 @@ export const LoginSimplified = () => {
 
   async function handleLogin() {
     try {
-      // TODO OFFLINE MODE
+      if (isOnline) {
+        console.log("Logging in online mode");
 
-      await login(formData).unwrap();
-      // set cookie
-      navigate(Path.SETTINGS);
-      console.log("Login successful. Redirecting...");
+        const response = await login(formData).unwrap();
+        // Update redux
+        dispatch(updateUser(response.data));
+        // dispatch(response.spaToken); TODO backend to send this
+        dispatch(setSpaToken(generateSPAToken()));
+
+        // set cookie here if required
+        navigate(Path.SETTINGS);
+        console.log("Login successful. Redirecting...");
+      } else {
+        console.log("Logging in offline mode");
+
+        // Retrieve stored user credentials from IndexedDB
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // as the ID
+        );
+        console.log(storedUserData);
+
+        // Check if credentials match
+        if (storedUserData) {
+          if (storedUserData.password !== formData.password) {
+            console.error("Invalid credentials");
+            setInvalidCredentials(true);
+            return;
+          }
+
+          console.log("successfull retried storedUserData", storedUserData);
+
+          // Dispatch Redux state update for offline user
+          const offlineUserData: User = {
+            id: storedUserData.email,
+            email: storedUserData.email,
+            dateCreated: dayjs().toISOString(),
+            lastModified: dayjs().toISOString(),
+            type: AccountType.OFFLINE,
+          };
+
+          dispatch(updateUser(offlineUserData));
+          dispatch(setSpaToken(generateSPAToken()));
+          navigate(Path.SETTINGS);
+          console.log("Offline login successful. Redirecting...");
+        } else {
+          setInvalidCredentials(true);
+          console.error("No stored data avaliable");
+        }
+      }
     } catch (error: any) {
       if (error.status === 401) {
         setInvalidCredentials(true);

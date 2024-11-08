@@ -2,7 +2,7 @@
 
 [https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API]
 
-You don't need to manually instantiate the IndexedDB for your application. The database and its object stores are created automatically when you first attempt to open the database using the indexedDB.open() method.
+You don't need to manually instantiate the IndexedDB for your application. The database and its object stores are created automatically when you first attempt to open the database using the indexedDB.open() method. It works similar to local storage.
 
 Here’s a quick summary of how it works:
 
