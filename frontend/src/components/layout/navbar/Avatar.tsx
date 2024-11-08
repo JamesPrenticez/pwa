@@ -7,14 +7,14 @@ interface AvatarProps {
   children: React.ReactNode;
 }
 
-export const Avatar = ({
-  onClick,
-  children
-}: AvatarProps): ReactElement => {
+export const Avatar = ({ onClick, children }: AvatarProps): ReactElement => {
   const user = useAppSelector((state) => state.user);
 
   return (
-    <div className="flex space-x-4 items-center relative text-muted select-none cursor-pointer" onClick={onClick}>
+    <div
+      className="flex space-x-4 items-center relative text-muted select-none cursor-pointer"
+      onClick={onClick}
+    >
       {user.data?.profilePicture ? (
         <div
           className="
@@ -51,7 +51,7 @@ export const Avatar = ({
             w-[2.8rem] 
             h-[2.8rem]
             "
-          >
+        >
           {getInitials(user.data.firstName, user.data.lastName)}
         </div>
       ) : (

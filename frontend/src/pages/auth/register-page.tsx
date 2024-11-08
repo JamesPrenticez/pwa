@@ -31,7 +31,8 @@ import { RegisterDetails } from "@models/auth";
 // import { saveUserDataToLocalStorage, saveUserLoginToLocalStorage } from "@utils"; // TODO convert to indexedDB
 import { setSpaToken, updateUser } from "@redux/slices";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
-import { insert, StoreName } from "@db";
+import { getById, insert, StoreName, update } from "@db";
+import { generateSPAToken } from "@utils/generateSpaToken";
 
 export const Register = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
@@ -64,35 +65,81 @@ export const Register = () => {
 
   async function handleRegister() {
     try {
-      if (isOnline) {
+      if (!isOnline) {
         console.log("Registering in offline mode");
 
-        // Save user credentials and user data to IndexedDB
-        const newOfflineUserData: User = {
-          id: formData.email, // or a generated ID
-          email: formData.email,
-          dateCreated: dayjs().toISOString(),
-          lastModified: dayjs().toISOString(),
-          type: AccountType.OFFLINE,
-        };
-
-        // Save credentials and user data to IndexedDB
-        await insert(
-          { email: formData.email, password: formData.password },
+        // Check if user already exists in Index DB
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
           StoreName.USER_DATA,
+          formData.email, // as the ID
         );
-        await insert(newOfflineUserData, StoreName.USER_DATA);
 
-        // Update Redux state with offline account data
-        console.log("update redux");
-        console.log(newOfflineUserData);
-        dispatch(updateUser(newOfflineUserData));
+        console.log(storedUserData);
 
+        if (!storedUserData) {
+          // Save user credentials and user data to IndexedDB
+          const newOfflineUserData: User = {
+            id: formData.email, // or a generated ID
+            email: formData.email,
+            dateCreated: dayjs().toISOString(),
+            lastModified: dayjs().toISOString(),
+            type: AccountType.OFFLINE,
+          };
+
+          // Save credentials and user data to IndexedDB
+          await insert(
+            { ...newOfflineUserData, password: formData.password },
+            StoreName.USER_DATA,
+            formData.email,
+          );
+          dispatch(updateUser(newOfflineUserData));
+        }
+
+        // Update SPA Token
+        const token = generateSPAToken();
+        // await ({token: token}, StoreName.SPA_TOKEN, "spa_token");
+        const existingSPAToken = await getById<{ token: string }>(
+          StoreName.SPA_TOKEN,
+          "spa_token",
+        );
+        console.log("exisiting", existingSPAToken);
+        if (existingSPAToken) {
+          await update({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+        } else await insert({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+
+        dispatch(setSpaToken(token));
+
+        // Navigate
         navigate(Path.SETTINGS);
         console.log("Registration successful. Redirecting...");
       } else {
         console.log("Registering in online mode");
-        await register(formData).unwrap(); // API match updates Redux, no need to handle that here
+        const response = await register(formData).unwrap(); // API match updates Redux, no need to handle that here
+
+        const storedUserData = await getById<{
+          email: string;
+          password: string;
+        }>(
+          StoreName.USER_DATA,
+          formData.email, // as the ID
+        );
+
+        if (storedUserData?.email !== formData.email) {
+          await insert(
+            { ...response.data, password: formData.password },
+            StoreName.USER_DATA,
+            formData.email,
+          );
+        }
+
+        // Update Redux
+        dispatch(updateUser(response.data));
+        dispatch(setSpaToken(generateSPAToken()));
+
+        // Navigate
         navigate(Path.SETTINGS);
         console.log("Registration successful. Redirecting...");
       }

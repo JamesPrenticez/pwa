@@ -26,10 +26,11 @@ import { Path } from "@models/paths";
 import type { LoginDetails } from "@models/auth";
 import type { ErrorResult } from "@models/api";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
-import { updateUser } from "@redux/slices";
+import { setSpaToken, updateUser } from "@redux/slices";
 import { getById, StoreName } from "@db";
 import { AccountType, User } from "@models";
 import dayjs from "dayjs";
+import { generateSPAToken } from "@utils/generateSpaToken";
 
 export const Login = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
@@ -68,6 +69,8 @@ export const Login = () => {
         const response = await login(formData).unwrap();
         // Update redux
         dispatch(updateUser(response.data));
+        // dispatch(response.spaToken); TODO backend to send this
+        dispatch(setSpaToken(generateSPAToken()));
 
         // set cookie here if required
         navigate(Path.SETTINGS);
@@ -81,11 +84,20 @@ export const Login = () => {
           password: string;
         }>(
           StoreName.USER_DATA,
-          formData.email, // assuming email is used as the ID
+          formData.email, // as the ID
         );
+        console.log(storedUserData);
 
         // Check if credentials match
-        if (storedUserData && storedUserData.password === formData.password) {
+        if (storedUserData) {
+          if (storedUserData.password !== formData.password) {
+            console.error("Invalid credentials");
+            setInvalidCredentials(true);
+            return;
+          }
+
+          console.log("successfull retried storedUserData", storedUserData);
+
           // Dispatch Redux state update for offline user
           const offlineUserData: User = {
             id: storedUserData.email,
@@ -96,11 +108,12 @@ export const Login = () => {
           };
 
           dispatch(updateUser(offlineUserData));
+          dispatch(setSpaToken(generateSPAToken()));
           navigate(Path.SETTINGS);
           console.log("Offline login successful. Redirecting...");
         } else {
           setInvalidCredentials(true);
-          console.error("Invalid credentials for offline login.");
+          console.error("No stored data avaliable");
         }
       }
     } catch (error: any) {

@@ -1,10 +1,12 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from "@redux/hooks";
-import { get, StoreName } from "@db";
+import { get, getById, StoreName } from "@db";
 import { setSpaToken, updateUser } from "@redux/slices";
 import { useDispatch } from "react-redux";
 import { User } from "@models";
+import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
+import { Loading } from "@components/common/loading";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const dispatch = useDispatch();
@@ -17,11 +19,15 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
       try {
         // Check if the SPA token is already set in the Redux store
         if (!spaToken) {
-          const tokens = await get<{ key: string; value: string }>(
+          const existingSPAToken = await getById<{ token: string }>(
             StoreName.SPA_TOKEN,
+            "spa_token",
           );
-          const fetchedSpaToken =
-            tokens.find((item) => item.key === "spa_token")?.value || null;
+
+          if (!existingSPAToken) return;
+
+          const fetchedSpaToken = existingSPAToken.token;
+
           dispatch(setSpaToken(fetchedSpaToken));
 
           setShowInfoLoading(true);
@@ -41,6 +47,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
     // Only fetch if user data is not loaded yet
     if (!data) {
+      console.log("start fetch");
       fetchSpaTokenAndUserData();
     } else {
       setLoading(false); // Skip loading if user data is already available
@@ -48,11 +55,15 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   }, [dispatch, spaToken, data]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <MaxWidthWrapper>Loading...</MaxWidthWrapper>;
   }
 
   if (showInfoLoading) {
-    return <div>Loading your information...</div>;
+    return (
+      <MaxWidthWrapper className="text-muted text-md min-h-screen-4rem flex items-center justify-center">
+        <h1 className="-mt-[4rem]">Loading your information...</h1>
+      </MaxWidthWrapper>
+    );
   }
 
   if (!spaToken) {

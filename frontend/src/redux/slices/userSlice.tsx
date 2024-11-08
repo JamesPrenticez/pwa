@@ -58,7 +58,7 @@ export const userSlice = createSlice({
     logoutUser(state) {
       state.data = {} as User;
       state.spaToken = null;
-      // localStorage.removeItem(LocalStorageKey.SPA_TOKEN);
+      // We dont remove IndexDB data..
     },
   },
   extraReducers: (builder) => {
