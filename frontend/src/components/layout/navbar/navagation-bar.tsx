@@ -13,7 +13,7 @@ import { capitalizeFirstLetter } from "@utils/capitalizeFirstLetter";
 import { MaxWidthWrapper } from "../max-width-wrapper";
 import { Path } from "@models";
 import { useAppSelector } from "@redux/hooks";
-import { Avatar } from "./avatar";
+import { Avatar } from "./avatar-button";
 import { MobileMenu } from "./mobile-menu";
 import { InstallPWAButton } from "@components/pwa/install-pwa-button";
 
