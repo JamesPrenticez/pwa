@@ -18,12 +18,13 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     const fetchSpaTokenAndUserData = async () => {
       try {
         // Check if the SPA token is already set in the Redux store
+        console.log("here");
         if (!spaToken) {
           const existingSPAToken = await getById<{ token: string }>(
             StoreName.SPA_TOKEN,
             "spa_token",
           );
-
+          console.log("existing:", existingSPAToken);
           if (!existingSPAToken) return;
 
           const fetchedSpaToken = existingSPAToken.token;
@@ -37,6 +38,9 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
           const userData = await get<User>(StoreName.USER_DATA);
           dispatch(updateUser(userData[0]));
+        } else {
+          console.log("there is a spa token already just fetch user data");
+          console.log(data);
         }
       } catch (err) {
         console.error("Error retrieving SPA Token:", err);

@@ -30,7 +30,7 @@ import { setSpaToken, updateUser } from "@redux/slices";
 import { getById, StoreName } from "@db";
 import { AccountType, User } from "@models";
 import dayjs from "dayjs";
-import { generateSPAToken } from "@utils/generateSpaToken";
+import { generateSPAToken } from "@utils/generate-spa-token";
 
 export const Login = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);

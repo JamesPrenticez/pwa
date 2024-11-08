@@ -6,6 +6,8 @@ import {
 } from "react";
 import { NavagationBar } from "./navbar/navagation-bar";
 import { Footer } from "./footer";
+import { RefreshPWAButton } from "@components/pwa/refresh-pwa-button";
+import { InstallPWAButton } from "@components/pwa/install-pwa-button";
 
 export const LayoutWrapper = ({
   children,
@@ -13,6 +15,7 @@ export const LayoutWrapper = ({
   return (
     <div className="relative font-outfit flex flex-col h-full max-h-[100dvh] flex-grow overflow-hidden">
       <NavagationBar />
+
       <main
         className="
         mt-[4rem]
@@ -25,6 +28,8 @@ export const LayoutWrapper = ({
         overflow-y-scroll
         "
       >
+        <h1 className="text-cyan-400">change this: 2</h1>
+        <RefreshPWAButton />
         {children}
         <Footer />
       </main>

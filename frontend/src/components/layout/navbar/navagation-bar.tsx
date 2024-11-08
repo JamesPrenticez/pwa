@@ -15,6 +15,7 @@ import { Path } from "@models";
 import { useAppSelector } from "@redux/hooks";
 import { Avatar } from "./avatar";
 import MobileMenu from "./mobile-menu";
+import { InstallPWAButton } from "@components/pwa/install-pwa-button";
 
 export const NavagationBar = (): ReactElement => {
   const location = useLocation();
@@ -73,11 +74,12 @@ export const NavagationBar = (): ReactElement => {
                 Login
               </Button>
             </NavLink>
-            <NavLink to={Path.REGISTER}>
+            <InstallPWAButton />
+            {/* <NavLink to={Path.REGISTER}>
               <Button color="cta" className="px-4 ">
                 Get Started
               </Button>
-            </NavLink>
+            </NavLink> */}
           </>
         )}
       </div>

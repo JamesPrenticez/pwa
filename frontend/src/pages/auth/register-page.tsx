@@ -32,7 +32,7 @@ import { RegisterDetails } from "@models/auth";
 import { setSpaToken, updateUser } from "@redux/slices";
 import { MaxWidthWrapper } from "@components/layout/max-width-wrapper";
 import { getById, insert, StoreName, update } from "@db";
-import { generateSPAToken } from "@utils/generateSpaToken";
+import { generateSPAToken } from "@utils/generate-spa-token";
 
 export const Register = () => {
   const isOnline = useAppSelector((state) => state.user.isOnline);
@@ -70,14 +70,15 @@ export const Register = () => {
 
         // Check if user already exists in Index DB
         const storedUserData = await getById<{
+          id: string;
           email: string;
-          password: string;
+          dateCreated: string;
+          lastModified: string;
+          type: AccountType.OFFLINE;
         }>(
           StoreName.USER_DATA,
           formData.email, // as the ID
         );
-
-        console.log(storedUserData);
 
         if (!storedUserData) {
           // Save user credentials and user data to IndexedDB
@@ -96,6 +97,8 @@ export const Register = () => {
             formData.email,
           );
           dispatch(updateUser(newOfflineUserData));
+        } else {
+          dispatch(updateUser(storedUserData));
         }
 
         // Update SPA Token
@@ -105,10 +108,14 @@ export const Register = () => {
           StoreName.SPA_TOKEN,
           "spa_token",
         );
-        console.log("exisiting", existingSPAToken);
+
         if (existingSPAToken) {
+          console.log("Found existing spaToken - updating ...");
           await update({ token: token }, StoreName.SPA_TOKEN, "spa_token");
-        } else await insert({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+        } else {
+          console.log("No token found - inserting new ...");
+          await insert({ token: token }, StoreName.SPA_TOKEN, "spa_token");
+        }
 
         dispatch(setSpaToken(token));
 
