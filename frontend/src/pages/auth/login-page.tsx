@@ -73,7 +73,7 @@ export const Login = () => {
         dispatch(setSpaToken(generateSPAToken()));
 
         // set cookie here if required
-        navigate(Path.SETTINGS);
+        navigate(Path.DASHBOARD);
         console.log("Login successful. Redirecting...");
       } else {
         console.log("Logging in offline mode");
@@ -109,7 +109,7 @@ export const Login = () => {
 
           dispatch(updateUser(offlineUserData));
           dispatch(setSpaToken(generateSPAToken()));
-          navigate(Path.SETTINGS);
+          navigate(Path.DASHBOARD);
           console.log("Offline login successful. Redirecting...");
         } else {
           setInvalidCredentials(true);

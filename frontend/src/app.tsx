@@ -8,7 +8,7 @@ import { Register } from "@pages/auth/register-page";
 
 import { Path } from "@models/paths";
 import { Test } from "@pages/test";
-import { Settings } from "@pages/settings";
+import { Dashboard } from "@pages/dashboard/dashboard-page";
 import { ProtectedRoute } from "@components/auth/protected-route";
 
 function App() {
@@ -19,14 +19,15 @@ function App() {
         <Route path={Path.LOGIN} element={<Login />} />
         <Route path={Path.REGISTER} element={<Register />} />
         <Route
-          path={Path.SETTINGS}
+          path="/dashboard/*"
           element={
-            <ProtectedRoute>
-              <Settings />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <Dashboard />
+            // </ProtectedRoute>
           }
         />
-        <Route path="/test" element={<Test />} />
+        <Route path="/test/*" element={<Dashboard />} />
+        <Route path="/*" element={<h1>404</h1>} />
       </Routes>
     </LayoutWrapper>
   );

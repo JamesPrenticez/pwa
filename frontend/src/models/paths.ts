@@ -7,10 +7,11 @@ export enum Path {
   REGISTER = "/register",
   PASSWORD_RESET = "/password-reset",
 
+  DASHBOARD = "/dashboard",
   SETTINGS = "/settings",
+  TIMER = "/timer",
+  CALENDAR = "/calendar",
+
   TERMS_OF_SERVICE = "/terms-of-service",
   PRIVACY_POLICY = "/privacy-policy",
-
-  STOPWATCH = "/stopwatch",
-  CALENDAR = "/calendar",
 }

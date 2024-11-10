@@ -120,7 +120,7 @@ export const Register = () => {
         dispatch(setSpaToken(token));
 
         // Navigate
-        navigate(Path.SETTINGS);
+        navigate(Path.DASHBOARD);
         console.log("Registration successful. Redirecting...");
       } else {
         console.log("Registering in online mode");
@@ -147,7 +147,7 @@ export const Register = () => {
         dispatch(setSpaToken(generateSPAToken()));
 
         // Navigate
-        navigate(Path.SETTINGS);
+        navigate(Path.DASHBOARD);
         console.log("Registration successful. Redirecting...");
       }
     } catch (error: any) {

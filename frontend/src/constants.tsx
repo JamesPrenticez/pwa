@@ -5,7 +5,7 @@ import {
   type NavigationItem,
 } from "@models";
 
-import { CalendarIcon, SettingsIcon, StopWatchIcon } from "@components/icons";
+import { OverviewIcon, SettingsIcon, StopWatchIcon } from "@components/icons";
 
 export const project = {
   name: "Self Regulator",
@@ -48,22 +48,43 @@ export const navbarLinkItems: Record<string, AuthedNavigationItem> = {
     desc: "Why",
     disabled: true,
   },
-  CALENDAR: {
-    name: "CALENDAR",
-    path: Path.CALENDAR,
-    desc: "Calendar",
-    icon: <CalendarIcon width="1.8rem" height="1.8rem" />,
-  },
   STOPWATCH: {
-    name: "Stopwatch",
-    path: Path.STOPWATCH,
+    name: "Timer",
+    path: Path.TIMER,
     desc: "Stopwatch",
     icon: <StopWatchIcon width="1.9rem" height="1.9rem" />,
   },
   SETTINGS: {
     name: "Settings",
-    path: Path.SETTINGS,
+    path: Path.DASHBOARD,
     desc: "Settings",
     icon: <SettingsIcon width="1.8rem" height="1.8rem" />,
   },
 };
+
+export const leftNavbarLinkItems: AuthedNavigationItem[] = [
+  {
+    name: "DASHBOARD",
+    path: Path.HOME,
+    desc: "Dashboard",
+    icon: <OverviewIcon width="1.6rem" height="1.6rem" />,
+  },
+  {
+    name: "TIMER",
+    path: Path.TIMER,
+    desc: "Countdown or stopwatch",
+    icon: (
+      <StopWatchIcon
+        width="1.9rem"
+        height="1.9rem"
+        style={{ transform: "translateY(-0.1rem)" }}
+      />
+    ),
+  },
+  {
+    name: "SETTINGS",
+    path: Path.SETTINGS,
+    desc: "Settings",
+    icon: <SettingsIcon width="1.8rem" height="1.8rem" />,
+  },
+];

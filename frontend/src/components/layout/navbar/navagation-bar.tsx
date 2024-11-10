@@ -47,7 +47,7 @@ export const NavagationBar = (): ReactElement => {
 
         {userData ? (
           <>
-            <NavLink to={Path.SETTINGS}>
+            <NavLink to={Path.DASHBOARD}>
               <Button variant="link" color="muted" className="ml-auto px-4">
                 {userData?.email}
               </Button>
@@ -64,9 +64,9 @@ export const NavagationBar = (): ReactElement => {
           </>
         ) : (
           <>
-            <NavLink to={Path.SETTINGS}>
+            <NavLink to={Path.DASHBOARD}>
               <Button variant="link" color="muted" className="ml-auto px-4">
-                Settings
+                Dashboard
               </Button>
             </NavLink>
             <NavLink to={Path.LOGIN}>
