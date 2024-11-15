@@ -88,7 +88,7 @@ export const navbarLinkItems: Record<string, AuthedNavigationItem> = {
 export const leftNavbarLinkItems: AuthedNavigationItem[] = [
   {
     name: "DASHBOARD",
-    path: Path.HOME,
+    path: Path.DASHBOARD,
     desc: "Dashboard",
     icon: <OverviewIcon width="2.6rem" height="2.6rem" />,
   },

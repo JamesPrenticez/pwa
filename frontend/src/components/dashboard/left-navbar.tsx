@@ -20,9 +20,8 @@ export const LeftNavbar = () => {
     >
       <ul className="flex flex-col grow">
         {leftNavbarLinkItems.map((item, index) => (
-          <NavLink to={`/dashboard${item.path}`} className="">
+          <NavLink key={item.name + index} to={`/dashboard${item.path}`}>
             <li
-              key={index}
               className={`relative flex group hover:bg-major/20 gap-6 py-6 px-6 items-center text-lg 
                 ${"/dashboard" + item.path === pathname ? "bg-major/20" : ""}
               `}

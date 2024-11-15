@@ -7,7 +7,7 @@ export enum Path {
   REGISTER = "/register",
   PASSWORD_RESET = "/password-reset",
 
-  DASHBOARD = "/dashboard",
+  DASHBOARD = "",
   HABITS = "/habits",
   TIMER = "/timer",
   SETTINGS = "/settings",
