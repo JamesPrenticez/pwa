@@ -6,7 +6,7 @@ export const MaxWidthWrapper = ({
   children,
 }: PropsWithChildren<HTMLAttributes<HTMLDivElement>>): ReactElement => {
   return (
-    <div className={twMerge("max-w-[90rem] mx-auto w-full", className)}>
+    <div className={twMerge("max-w-[136.8rem] mx-auto w-full", className)}>
       {children}
     </div>
   );

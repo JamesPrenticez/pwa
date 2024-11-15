@@ -16,14 +16,13 @@ export const LayoutWrapper = ({
   children,
 }: PropsWithChildren): ReactElement => {
   const { pathname } = useLocation();
-  const isHomePage = pathname === Path.HOME;
-  console.log(pathname);
+  const isDashboardRoute = pathname.startsWith("/dashboard");
 
   return (
     <div className="relative font-outfit flex flex-col h-full max-h-[100dvh] flex-grow overflow-hidden">
       <NavagationBar />
-      <div className="flex w-full h-full mt-[4rem] md:mt-[5rem] min-h-screen-4rem md:min-h-screen-5rem">
-        {!isHomePage && <LeftNavbar />}
+      <div className="flex w-full h-full mt-[6rem] md:mt-[8rem] min-h-screen-6rem md:min-h-screen-8rem">
+        {isDashboardRoute && <LeftNavbar />}
 
         <main
           className="
@@ -31,8 +30,8 @@ export const LayoutWrapper = ({
             text-3xl
             bg-tarantula
             text-white
-            min-h-screen-4rem 
-            md:min-h-screen-5rem
+            min-h-screen-6rem 
+            md:min-h-screen-8rem
             overflow-y-scroll
           "
         >

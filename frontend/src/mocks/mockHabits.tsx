@@ -1,6 +1,6 @@
-import { type IHabit } from "@models";
+import { type Habit } from "@models";
 
-export const mockTodos: IHabit[] = [
+export const mockHabits: Habit[] = [
   {
     _id: "5f50c31e1c4ae0b63c4b4a94",
     user_id: "123456",

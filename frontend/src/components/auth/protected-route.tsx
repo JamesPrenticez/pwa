@@ -64,7 +64,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
   if (showInfoLoading) {
     return (
-      <MaxWidthWrapper className="text-muted text-md min-h-screen-4rem flex items-center justify-center">
+      <MaxWidthWrapper className="text-muted text-md min-h-screen-6rem flex items-center justify-center">
         <h1 className="-mt-[4rem]">Loading your information...</h1>
       </MaxWidthWrapper>
     );

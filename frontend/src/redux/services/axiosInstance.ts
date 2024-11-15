@@ -1,6 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import { mockUsers } from "@mocks";
+import { mockUsers, mockHabits, mockDaysRecord } from "@mocks";
 
 const useMockData = true; //import.meta.env.VITE_ENV === "development" ? true : false;
 const log = false;
@@ -27,13 +27,30 @@ if (useMockData) {
   //============================================
   // User Details
   mockAxiosInstance.onGet("user").reply((config) => {
+    return [200, { data: mockUsers[0] }];
+  });
+
+  // User Habits
+  mockAxiosInstance.onGet("habits").reply((config) => {
     if (log)
       console.table({
         method: config.method,
         endpoint: config.url,
         params: config.params,
       });
-    return [200, { data: mockUsers[0] }];
+    console.log("habits hit");
+    return [200, { data: mockHabits }];
+  });
+
+  mockAxiosInstance.onGet("days").reply((config) => {
+    if (log)
+      console.table({
+        method: config.method,
+        endpoint: config.url,
+        params: config.params,
+      });
+    console.log("hit days");
+    return [200, { data: mockDaysRecord }];
   });
 
   //============================================

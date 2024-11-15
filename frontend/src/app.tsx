@@ -10,6 +10,7 @@ import { Path } from "@models/paths";
 import { Test } from "@pages/test";
 import { Dashboard } from "@pages/dashboard/dashboard-page";
 import { ProtectedRoute } from "@components/auth/protected-route";
+import { NotFound } from "@pages/errors/404";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           }
         />
         <Route path="/test/*" element={<Dashboard />} />
-        <Route path="/*" element={<h1>404</h1>} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </LayoutWrapper>
   );

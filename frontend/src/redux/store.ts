@@ -3,11 +3,12 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { baseApi } from "./services";
 
-import { userSlice } from "./slices";
+import { habitsSlice, userSlice } from "./slices";
 
 export const store = configureStore({
   reducer: {
     user: userSlice.reducer,
+    habits: habitsSlice.reducer,
     [baseApi.reducerPath]: baseApi.reducer,
   },
 

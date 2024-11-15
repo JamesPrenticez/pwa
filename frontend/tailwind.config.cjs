@@ -7,14 +7,14 @@ module.exports = {
       xm: [".75rem", "1rem"], // font size, line height
       sm: [".875rem", "1.25rem"],
       base: ["1rem", "1.5rem"],
-      lg: ["1.125rem", "1.65rem"],
-      xl: ["1.25rem", "1.75rem"],
-      "2xl": ["1.4rem", "2rem"],
-      "3xl": ["1.875rem", "2.25rem"],
-      "4xl": ["2.25rem", "2.75rem"],
-      "5xl": ["3rem", "3.5rem"],
-      "6xl": ["3.75rem", "4.25rem"],
-      "7xl": ["4.5rem", "5.2rem"],
+      lg: ["1.5rem", "1.65rem"],
+      xl: ["1.75rem", "1.75rem"],
+      "2xl": ["2rem", "2rem"],
+      "3xl": ["3rem", "3rem"],
+      "4xl": ["4rem", "4rem"],
+      "5xl": ["5rem", "5rem"],
+      "6xl": ["6rem", "6rem"],
+      "7xl": ["7rem", "7rem"],
     },
     extend: {
       backgroundColor: {
@@ -107,12 +107,12 @@ module.exports = {
         leaf: "#5ea660",
       },
       height: {
-        "screen-5rem": "calc(100vh - 5rem)",
-        "screen-4rem": "calc(100vh - 4rem)",
+        "screen-8rem": "calc(100vh - 8rem)",
+        "screen-6rem": "calc(100vh - 6rem)",
       },
       minHeight: {
-        "screen-5rem": "calc(100vh - 5rem)",
-        "screen-4rem": "calc(100vh - 4rem)",
+        "screen-8rem": "calc(100vh - 8rem)",
+        "screen-6rem": "calc(100vh - 6rem)",
       },
       fontFamily: {
         sans: ["Arial"],

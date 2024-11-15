@@ -8,8 +8,9 @@ export enum Path {
   PASSWORD_RESET = "/password-reset",
 
   DASHBOARD = "/dashboard",
-  SETTINGS = "/settings",
+  HABITS = "/habits",
   TIMER = "/timer",
+  SETTINGS = "/settings",
   CALENDAR = "/calendar",
 
   TERMS_OF_SERVICE = "/terms-of-service",

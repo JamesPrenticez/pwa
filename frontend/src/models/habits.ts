@@ -1,4 +1,4 @@
-export interface IHabit {
+export interface Habit {
   _id: string;
   user_id: string;
   title: string;
@@ -10,13 +10,13 @@ export interface IHabit {
   errorIcon?: string;
   description?: string;
   created_at?: string;
-  days?: IDays;
+  days?: Days;
   frequency?: string;
 }
 
-export type IDays = Record<string, IDay>;
+export type Days = Record<string, Day>;
 
-export interface IDay {
+export interface Day {
   _id: string;
   habit_id: string;
   date: Date;

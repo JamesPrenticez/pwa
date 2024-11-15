@@ -1,4 +1,1 @@
-husky
-lint
-
-backend
+Settings context, store left menu collapse state

@@ -6,6 +6,8 @@ import { ProtectedRoute } from "@components/auth/protected-route";
 import { Path } from "@models";
 import { TimerPage } from "@pages/timer/timer-page";
 import { HomeScreen } from "@components/dashboard/home-screen";
+import { NotFound } from "@pages/errors/404";
+import { HabitsPage } from "@pages/habits/habits-page";
 
 export const Dashboard = () => {
   // const userEmail = useAppSelector((state) => state.user.data);
@@ -23,6 +25,7 @@ export const Dashboard = () => {
             // </ProtectedRoute>
           }
         />
+        <Route path={Path.HABITS} element={<HabitsPage />} />
         <Route path={Path.TIMER} element={<TimerPage />} />
         <Route
           path={Path.SETTINGS}
@@ -32,6 +35,7 @@ export const Dashboard = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </>
   );

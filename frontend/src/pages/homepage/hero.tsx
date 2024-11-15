@@ -5,6 +5,7 @@ import { LoginSimplified } from "@pages/auth/login-simplified";
 import { CountdownTimer } from "@components/timer/countdown-timer";
 import { useState } from "react";
 import { ReserveSpotModal } from "./my-reserve-spot-modal";
+import { GradientText } from "@components/common/gradient-text";
 
 export const Hero = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -19,22 +20,22 @@ export const Hero = () => {
 
         <div className="mt-[2rem] md:mt-[4rem] flex flex-col items-center gap-2 md:gap-8">
           <CountdownTimer expiryDateTime={mockLobbyCountDownTimer} />
-          <div className="text-muted text-[1.4rem] px-8 text-center md:text-left">
+          <div className="text-muted text-2xl px-8 text-center md:text-left">
             Kick off the new year with our exclusive <span>90 day</span>{" "}
             challenge
           </div>
           <Button
             color="major"
             variant="outlined"
-            className="text-2xl md:text-4xl md:px-[4rem] md:py-[2rem] rounded-full flex flex-col items-center"
+            className="md:px-[4rem] md:py-[2rem] rounded-full flex flex-col items-center mt-[2rem]"
             onClick={() => setIsOpen(true)}
           >
-            <span>Reserve Your Spot Now</span>
+            <span className="uppercase">Reserve Your Spot Now</span>
             {/* <GradientText
                 text="Reserve your spot"
                 bgcolor1="#a3ff84"
                 bgcolor2="#a3ff84"
-                bgcolor3="#a3ff84"
+                bgcolor3="#d3e957"
               /> */}
           </Button>
         </div>
