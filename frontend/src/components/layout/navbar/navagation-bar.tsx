@@ -18,7 +18,7 @@ export const NavagationBar = (): ReactElement => {
 
   return (
     <NavbarWrapper>
-      <div className="flex hover:text-red-400">
+      <div className="flex">
         <CompanyLogo onClick={() => setIsMenuOpen(false)} />
         <CompanyName />
       </div>
