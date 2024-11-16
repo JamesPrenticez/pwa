@@ -41,7 +41,7 @@ export const mockDaysRecord: Habit["days"] = {
     _id: "953cb8033975f8189773b0c3",
     habit_id: "29f8424c32b86011633c0a6e",
     date: thisWeek[0],
-    measurement: { quantity: 8885, unit: Unit.TIME },
+    measurement: { quantity: 0, unit: Unit.TIME },
   },
   [`${thisWeek[4]}`]: {
     _id: "fa02e1379f414312024f88c8",

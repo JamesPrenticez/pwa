@@ -25,6 +25,7 @@ export const navigationItemsForHomepage: NavigationItem[] = [];
 export const navigationItemsForAuthenticedUsers: NavigationItem[] = [];
 
 export const dayLabels = ["M", "T", "W", "T", "F", "S", "S"];
+export const dayLabelsMed = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 // "Level up"
 // "Own your day!"

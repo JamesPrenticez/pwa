@@ -3,6 +3,8 @@ import isoWeek from "dayjs/plugin/isoWeek";
 
 dayjs.extend(isoWeek);
 
+// TODO this doesnt know what year to use
+
 export function getWeekDateArray(weekNumber: number): Date[] {
   const weekDates: Date[] = [];
 

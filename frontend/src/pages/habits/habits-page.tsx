@@ -5,6 +5,7 @@ import { Tabs } from "@components/ui/tabs";
 import { useState } from "react";
 import { MonthlyView } from "@components/dashboard/habits/monthly-view";
 import { YearlyView } from "@components/dashboard/habits/yearly-view";
+import { getWeekDetails } from "@utils";
 
 type Option = "weekly" | "monthly" | "yearly";
 
@@ -23,6 +24,8 @@ export const HabitsPage = () => {
     habit_id: "29f8424c32b86011633c0a6e",
   }); // TODO dates
 
+  const currentWeekDetails = getWeekDetails();
+
   if (!habitsData) return <h1>Loading...</h1>;
 
   return (
@@ -34,7 +37,11 @@ export const HabitsPage = () => {
         defaultActiveValue={activeOption}
       />
 
-      {activeOption === "weekly" && <WeeklyView data={habitsData} />}
+      {activeOption === "weekly" && (
+        <>
+          <WeeklyView data={habitsData} weekDetails={currentWeekDetails} />
+        </>
+      )}
 
       {activeOption === "monthly" && <MonthlyView data={habitsData} />}
 

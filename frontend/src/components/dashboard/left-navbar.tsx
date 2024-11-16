@@ -16,7 +16,7 @@ export const LeftNavbar = () => {
 
   return (
     <nav
-      className={`relative flex flex-col border-r border-r-major/20 ${collapsed ? "w-[6.4rem] min-w-[6.4rem]" : "w-[320px] min-w-[320px]"}`}
+      className={`flex flex-col relative border-r border-r-major/20 ${collapsed ? "w-[6.4rem] min-w-[6.4rem]" : "w-[320px] min-w-[320px]"}`}
     >
       <ul className="flex flex-col grow">
         {leftNavbarLinkItems.map((item, index) => (

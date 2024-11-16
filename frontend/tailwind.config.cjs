@@ -58,7 +58,7 @@ module.exports = {
       },
       borderColor: {
         primary: "#101010",
-        muted: "#212121",
+        muted: "#d1d5db",
         ghost: "#303030",
         major: "#00FF00",
         minor: "#d946ef",

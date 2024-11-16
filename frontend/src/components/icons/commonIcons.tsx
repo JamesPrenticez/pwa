@@ -19,6 +19,21 @@ export const CrossIcon = (props: SVGProps<SVGSVGElement>): ReactElement => {
   );
 };
 
+export const MinusIcon = (props: SVGProps<SVGSVGElement>): ReactElement => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      {...props}
+    >
+      <path d="M5 12h14" />
+    </svg>
+  );
+};
+
 export const ArrowLeftIcon = (props: SVGProps<SVGSVGElement>): ReactElement => {
   return (
     <svg
@@ -192,7 +207,8 @@ export const ChevronDownIcon = (
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       strokeWidth="1.5"
-      fill="currentColor"
+      fill="none"
+      stroke="currentColor"
       {...props}
     >
       <path
