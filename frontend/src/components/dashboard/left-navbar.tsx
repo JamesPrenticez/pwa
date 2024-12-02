@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { SetStateAction, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { leftNavbarLinkItems } from "@constants";
 import { AuthedNavigationItem, Path } from "@models";
@@ -9,16 +9,25 @@ import {
   XIcon,
 } from "@components/icons";
 
-export const LeftNavbar = () => {
+interface LeftNavProps {
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<SetStateAction<boolean>>;
+}
+
+export const LeftNavbar = ({ isMenuOpen, setIsMenuOpen }: LeftNavProps) => {
   const [collapsed, setCollapsed] = useState(true);
   const { pathname } = useLocation();
   // const currentPage = navigationPages.find(page => page.path.startsWith(pathname)) || navigationPages[0];
 
   return (
     <nav
-      className={`flex flex-col relative border-r border-r-major/20 ${collapsed ? "w-[6.4rem] min-w-[6.4rem]" : "w-[320px] min-w-[320px]"}`}
+      className={`flex-col absolute top-[5rem] bottom-0 border-r border-r-major/20 z-50 
+        bg-[radial-gradient(155.87%_217.79%_at_50%_85.57%,_#000_30.07%,_#515151_100%)] bg-opacity-30
+        ${collapsed ? "w-[6.4rem] min-w-[6.4rem]" : "w-[320px] min-w-[320px]"}
+        ${!isMenuOpen ? "hidden" : "flex"}
+      `}
     >
-      <ul className="flex flex-col grow">
+      <ul className="flex flex-col grow h-full">
         {leftNavbarLinkItems.map((item, index) => (
           <NavLink key={item.name + index} to={`/dashboard${item.path}`}>
             <li
@@ -41,7 +50,7 @@ export const LeftNavbar = () => {
 
         {/* Desktop only */}
         <button
-          className="flex items-center justify-center hover:bg-major/20 w-[6.4rem] h-[6.4rem] mt-auto"
+          className="flex bg-black items-center justify-center hover:bg-major/20 w-[6.4rem] h-[6.4rem] mt-auto"
           onClick={() => setCollapsed(!collapsed)}
         >
           <div className="left-nav__border"></div>

@@ -1,4 +1,4 @@
-import { ReactNode, useState, type ReactElement } from "react";
+import { ReactNode, SetStateAction, useState, type ReactElement } from "react";
 import { navigationItemsForHomepage } from "@constants";
 import { NavLink, useLocation } from "react-router-dom";
 import { CompanyLogo } from "./company-logo";
@@ -12,14 +12,21 @@ import { Avatar } from "./avatar-button";
 import { MobileMenu } from "./mobile-menu";
 import { InstallPWAButton } from "@components/pwa/install-pwa-button";
 
-export const NavagationBar = (): ReactElement => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+interface NavigaionBarProps {
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<SetStateAction<boolean>>;
+}
+
+export const NavagationBar = ({
+  isMenuOpen,
+  setIsMenuOpen,
+}: NavigaionBarProps): ReactElement => {
   const userData = useAppSelector((state) => state.user.data);
 
   return (
     <NavbarWrapper>
       <div className="flex">
-        <CompanyLogo onClick={() => setIsMenuOpen(false)} />
+        <CompanyLogo onClick={() => setIsMenuOpen((prev) => !prev)} />
         <CompanyName />
       </div>
 
@@ -35,7 +42,7 @@ export const NavagationBar = (): ReactElement => {
         ))}
       </ul>
 
-      <div className="flex">
+      {/* <div className="flex">
         <OfflineModeSwitch />
 
         {userData ? (
@@ -62,7 +69,7 @@ export const NavagationBar = (): ReactElement => {
             <InstallPWAButton />
           </>
         )}
-      </div>
+      </div> */}
     </NavbarWrapper>
   );
 };
